@@ -4,10 +4,12 @@ cfg = CFG.fromstring("""
 	Question -> QuestionWord Auxiliary NP VP
 	QuestionWord -> WRB
 	Auxiliary -> 'does' | 'do' | 'did'
-	NP -> NN | DT Noun | JJ NN
+	PPS -> PPS PP | PP 
+	PP -> IN DT NN | IN NN
+	NP -> NN | DT Noun | JJ NN | DT Noun PPS
 	NN -> ProperNoun | Noun | NN CC NN
 	JJ -> JJ JJS | JJS
-	VP -> V | V NN NN | V NP | VP CC VP | V NP VP
+	VP -> V | V NN NN | V NP | VP CC VP | V NP VP | VP PPS
 	V -> VBZ | VB | VBD | VBG
 	VBZ -> 'barks' | 'laughs' | 'eats' | 'feeds' | 'thinks' | 'drinks' | 'does'
 	VB -> 'bark' | 'laugh' | 'eat' | 'feed' | 'think' | 'drink' | 'do'
@@ -22,10 +24,9 @@ cfg = CFG.fromstring("""
 	RB -> 'seldom' | 'often' | 'when'
 	WRB -> 'when'
 	""")
+
 cfparser = ChartParser(cfg)
-text = """\
-Wallace eats tasty soft cheese
-Wallace often eats tasty soft cheese in the kitchen after dinner
+text = """
 when Gromit barks Wallace feeds Gromit
 """
 
@@ -37,6 +38,7 @@ Wallace and Gromit ate cheese
 Wallace feeds Gromit
 Wallace seldom feeds Gromit cheese
 Wallace thinks Gromit eats cheese and drinks water
+Wallace often eats tasty soft cheese in the kitchen after dinner
 when does Wallace eat cheese
 """
 
