@@ -1,32 +1,32 @@
 from nltk import *
 cfg = CFG.fromstring("""
 	S -> NP | NP VP | NP RB VP | Question
-	Question -> QuestionWord Auxiliary NP
+	Question -> QuestionWord Auxiliary NP VP
 	QuestionWord -> WRB
 	Auxiliary -> 'does' | 'do' | 'did'
-	NP -> NN | DT Noun | NN CC NN 
-	NN -> ProperNoun | Noun
-	ProperNoun -> 'Gromit' | 'Wallace'
-	Noun -> 'cheese' | 'water' | 'kitchen' | 'dinner'
-	VP -> V | V NN NN | V NP | VP CC VP 
+	NP -> NN | DT Noun | JJ NN
+	NN -> ProperNoun | Noun | NN CC NN
+	JJ -> JJ JJS | JJS
+	VP -> V | V NN NN | V NP | VP CC VP | V NP VP
 	V -> VBZ | VB | VBD | VBG
 	VBZ -> 'barks' | 'laughs' | 'eats' | 'feeds' | 'thinks' | 'drinks' | 'does'
 	VB -> 'bark' | 'laugh' | 'eat' | 'feed' | 'think' | 'drink' | 'do'
  	VBD -> 'barked' | 'laughed' | 'ate' | 'fed' | 'thought' | 'drank' | 'did'
  	VBG -> 'barking' | 'laughing' | 'eating' | 'feeding' | 'thinking' | 'drinking' | 'doing'
+ 	ProperNoun -> 'Gromit' | 'Wallace'
+	Noun -> 'cheese' | 'water' | 'kitchen' | 'dinner'
 	DT -> 'a' | 'the' | 'an' | 'my'
 	IN -> 'in' | 'on' | 'at' | 'after' | 'when'
-	JJ -> 'tasty' | 'soft' 
+	JJS -> 'tasty' | 'soft' 
 	CC -> 'and' | 'but'
 	RB -> 'seldom' | 'often' | 'when'
 	WRB -> 'when'
 	""")
 cfparser = ChartParser(cfg)
 text = """\
-Wallace thinks Gromit eats cheese and drinks water
+Wallace eats tasty soft cheese
 Wallace often eats tasty soft cheese in the kitchen after dinner
 when Gromit barks Wallace feeds Gromit
-when does Wallace eat cheese
 """
 
 done = """\
@@ -36,19 +36,22 @@ Wallace and Gromit eat cheese
 Wallace and Gromit ate cheese
 Wallace feeds Gromit
 Wallace seldom feeds Gromit cheese
+Wallace thinks Gromit eats cheese and drinks water
+when does Wallace eat cheese
 """
 
 
-def test(text):
+def test(text, toPrint=False):
 	sents = text.splitlines()
 	counter = 0
 	for sent in sents:
 		parses = cfparser.parse(sent.split())
 		for tree in parses:
-			#print tree
-			#print "--------------"
+			if toPrint:
+				print tree
+				print "--------------"
 			counter += 1
 	print counter, "/", len(sents)
 
-test(text)
+test(text, True)
 test(done)
