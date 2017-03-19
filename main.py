@@ -1,15 +1,14 @@
 from nltk import *
 cfg = CFG.fromstring("""
-	S -> NP | Action | Question
-	Question -> QuestionWord Auxiliary Action
-	Action -> NP VP | NP RB VP
+	S -> NP | NP VP | NP RB VP | Question
+	Question -> QuestionWord Auxiliary NP
 	QuestionWord -> WRB
 	Auxiliary -> 'does' | 'do' | 'did'
 	NP -> NN | DT Noun | NN CC NN 
 	NN -> ProperNoun | Noun
 	ProperNoun -> 'Gromit' | 'Wallace'
 	Noun -> 'cheese' | 'water' | 'kitchen' | 'dinner'
-	VP -> V | V DT Noun | V NN | V NN NN | V NP | VP CC VP
+	VP -> V | V NN NN | V NP | VP CC VP 
 	V -> VBZ | VB | VBD | VBG
 	VBZ -> 'barks' | 'laughs' | 'eats' | 'feeds' | 'thinks' | 'drinks' | 'does'
 	VB -> 'bark' | 'laugh' | 'eat' | 'feed' | 'think' | 'drink' | 'do'
@@ -27,6 +26,7 @@ text = """\
 Wallace thinks Gromit eats cheese and drinks water
 Wallace often eats tasty soft cheese in the kitchen after dinner
 when Gromit barks Wallace feeds Gromit
+when does Wallace eat cheese
 """
 
 done = """\
@@ -36,7 +36,6 @@ Wallace and Gromit eat cheese
 Wallace and Gromit ate cheese
 Wallace feeds Gromit
 Wallace seldom feeds Gromit cheese
-when does Wallace eat cheese
 """
 
 
@@ -46,8 +45,8 @@ def test(text):
 	for sent in sents:
 		parses = cfparser.parse(sent.split())
 		for tree in parses:
-			print tree
-			print "--------------"
+			#print tree
+			#print "--------------"
 			counter += 1
 	print counter, "/", len(sents)
 
