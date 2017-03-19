@@ -1,7 +1,7 @@
 from nltk import *
 cfg = CFG.fromstring("""
-	S -> NP VP
-	NP -> ProperNoun | Noun
+	S -> NP VP | NP VP NP 
+	NP -> ProperNoun | Noun 
 	ProperNoun -> 'Gromit' | 'Wallace'
 	Noun -> 'cheese' | 'water' | 'kitchen' | 'dinner'
 	VP -> V
@@ -17,7 +17,15 @@ cfg = CFG.fromstring("""
 cfparser = ChartParser(cfg)
 text = """\
 Gromit barks
-Wallace laughs
+Gromit barked
+Wallace and Gromit eat cheese
+Wallace and Gromit ate cheese
+Wallace feeds Gromit
+Wallace seldom feeds Gromit cheese
+Wallace thinks Gromit eats cheese and drinks water
+Wallace often eats tasty soft cheese in the kitchen after dinner
+when Gromit barks Wallace feeds Gromit
+when does Wallace eat cheese
 """
 sents = text.splitlines()
 for sent in sents:
