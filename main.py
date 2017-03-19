@@ -1,16 +1,19 @@
 from nltk import *
 cfg = CFG.fromstring("""
-	S -> NP VP | NP VP NP 
-	NP -> ProperNoun | Noun 
+	S -> Action | Action Object 
+	Action -> NP VP
+	Object -> NP
+	NP -> NN | DT Noun | NN CC NN 
+	NN -> ProperNoun | Noun
 	ProperNoun -> 'Gromit' | 'Wallace'
 	Noun -> 'cheese' | 'water' | 'kitchen' | 'dinner'
 	VP -> V
-	V -> VBZ
-	VBZ -> 'barks' | 'laughs' | 'eats' | 'feeds' | 'thinks' | 'drinks' | VB | VBD | VBG
-	VB -> 'bark' | 'laugh' | 'eat' | 'feed' | 'think' | 'drink' 
- 	VBD -> 'barked' | 'laughed' | 'ate' | 'fed' | 'thought' | 'drank' 
- 	VBG -> 'barking' | 'laughing' | 'eating' | 'feeding' | 'thinking' | 'drinking' 
-	DT -> 'a' | 'the' 
+	V -> VBZ | VB | VBD | VBG
+	VBZ -> 'barks' | 'laughs' | 'eats' | 'feeds' | 'thinks' | 'drinks' | 'does' 
+	VB -> 'bark' | 'laugh' | 'eat' | 'feed' | 'think' | 'drink' | 'do'
+ 	VBD -> 'barked' | 'laughed' | 'ate' | 'fed' | 'thought' | 'drank' | 'did'
+ 	VBG -> 'barking' | 'laughing' | 'eating' | 'feeding' | 'thinking' | 'drinking' | 'doing'
+	DT -> 'a' | 'the' | 'an' | 'my'
 	IN -> 'in' | 'on' | 'at' | 'after' | 'when'
 	JJ -> 'tasty' | 'soft' 
 	CC -> 'and' | 'but'
@@ -30,8 +33,10 @@ Wallace often eats tasty soft cheese in the kitchen after dinner
 when Gromit barks Wallace feeds Gromit
 when does Wallace eat cheese
 """
+
 sents = text.splitlines()
 for sent in sents:
 	parses = cfparser.parse(sent.split())
 	for tree in parses:
 		print tree
+		print "--------------"
