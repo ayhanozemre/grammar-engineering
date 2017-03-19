@@ -1,6 +1,6 @@
 from nltk import *
 cfg = CFG.fromstring("""
-	S -> NP | NP VP | NP RB VP | Question
+	S -> NP VP | NP RB VP | Question | S CC S
 	Question -> QuestionWord Auxiliary NP VP
 	QuestionWord -> WRB
 	Auxiliary -> 'does' | 'do' | 'did'
