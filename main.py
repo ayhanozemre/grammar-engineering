@@ -6,7 +6,10 @@ cfg = CFG.fromstring("""
 	Noun -> 'cheese' | 'water' | 'kitchen' | 'dinner'
 	VP -> V
 	V -> VBZ
-	VBZ -> 'barks' | 'laughs' | 'eats' | 'feeds' | 'thinks' | 'drinks' 
+	VBZ -> 'barks' | 'laughs' | 'eats' | 'feeds' | 'thinks' | 'drinks' | VB | VBD | VBG
+	VB -> 'bark' | 'laugh' | 'eat' | 'feed' | 'think' | 'drink' 
+ 	VBD -> 'barked' | 'laughed' | 'ate' | 'fed' | 'thought' | 'drank' 
+ 	VBG -> 'barking' | 'laughing' | 'eating' | 'feeding' | 'thinking' | 'drinking' 
 	DT -> 'a' | 'the' 
 	IN -> 'in' | 'on' | 'at' | 'after' | 'when'
 	JJ -> 'tasty' | 'soft' 
