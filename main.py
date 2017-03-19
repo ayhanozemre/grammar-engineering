@@ -1,15 +1,15 @@
 from nltk import *
 cfg = CFG.fromstring("""
-	S -> NP VP | NP RB VP | Question | S CC S
+	S -> NP VP | NP RB VP | Question | S CC S | NP V S | IN S 
 	Question -> QuestionWord Auxiliary NP VP
 	QuestionWord -> WRB
 	Auxiliary -> 'does' | 'do' | 'did'
 	PPS -> PPS PP | PP 
 	PP -> IN DT NN | IN NN
-	NP -> NN | DT Noun | JJ NN | DT Noun PPS
+	NP -> NN | DT Noun | JJS NN | DT Noun PPS
 	NN -> ProperNoun | Noun | NN CC NN
-	JJ -> JJ JJS | JJS
-	VP -> V | V NN NN | V NP | VP CC VP | V NP VP | VP PPS
+	JJS -> JJS JJ | JJ
+	VP -> V | V NN NN | V NP | VP CC VP | VP PPS
 	V -> VBZ | VB | VBD | VBG
 	VBZ -> 'barks' | 'laughs' | 'eats' | 'feeds' | 'thinks' | 'drinks' | 'does'
 	VB -> 'bark' | 'laugh' | 'eat' | 'feed' | 'think' | 'drink' | 'do'
@@ -19,16 +19,14 @@ cfg = CFG.fromstring("""
 	Noun -> 'cheese' | 'water' | 'kitchen' | 'dinner'
 	DT -> 'a' | 'the' | 'an' | 'my'
 	IN -> 'in' | 'on' | 'at' | 'after' | 'when'
-	JJS -> 'tasty' | 'soft' 
-	CC -> 'and' | 'but'
-	RB -> 'seldom' | 'often' | 'when'
+	JJ -> 'tasty' | 'soft' 
+	CC -> 'and' | 'but' 
+	RB -> 'seldom' | 'often'
 	WRB -> 'when'
 	""")
 
 cfparser = ChartParser(cfg)
-text = """
-when Gromit barks Wallace feeds Gromit
-"""
+text = """"""
 
 done = """\
 Gromit barks
@@ -39,6 +37,7 @@ Wallace feeds Gromit
 Wallace seldom feeds Gromit cheese
 Wallace thinks Gromit eats cheese and drinks water
 Wallace often eats tasty soft cheese in the kitchen after dinner
+when Gromit barks Wallace feeds Gromit
 when does Wallace eat cheese
 """
 
@@ -46,13 +45,22 @@ when does Wallace eat cheese
 def test(text, toPrint=False):
 	sents = text.splitlines()
 	counter = 0
+	toPrintNow = False
 	for sent in sents:
 		parses = cfparser.parse(sent.split())
-		for tree in parses:
-			if toPrint:
+		number = len(list(parses))
+		if number > 0:
+			counter +=1
+		if number>1:
+			print number, "trees for sentence:"
+			print "-- ", sent
+			toPrintNow = True
+		if toPrint or toPrintNow:
+			for tree in cfparser.parse(sent.split()):
 				print tree
 				print "--------------"
-			counter += 1
+			if toPrintNow:
+				toPrintNow = False
 	print counter, "/", len(sents)
 
 test(text, True)
