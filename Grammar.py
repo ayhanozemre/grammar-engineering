@@ -4,17 +4,17 @@ class Grammar:
 
 	def __init__(self, cfg_str):
 		self.cfg = grammar.FeatureGrammar.fromstring(cfg_str)
+		self.parser = FeatureChartParser(self.cfg)
 
 	def parse(self, text):
 		""" Returns a generator. """
-		self.parser = FeatureChartParser(self.cfg)
 		sents = text.splitlines()
 		for sent in sents:
 			parses = self.parser.parse(sent.split())
 			for tree in parses:
 				yield tree
 
-	def parse_and_print(text, toPrint=False):
+	def parse_and_print(self, text, toPrint=False):
 		""" Does not return anything, prints all the info. """
 		sents = text.splitlines()
 		counter = 0
