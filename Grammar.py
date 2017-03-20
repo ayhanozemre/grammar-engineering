@@ -22,7 +22,7 @@ class Grammar:
 		for sent in sents:
 			parses = self.parser.parse(sent.split())
 			number = len(list(parses))
-			print "found {0} parses for sentence: \n   {1}".format(number, sent)
+			print "found {} parses for sentence: \n   {}".format(number, sent)
 			if number > 0:
 				counter += 1
 			if number > 1:
@@ -33,7 +33,7 @@ class Grammar:
 					print "--------------"
 				if toPrintNow:
 					toPrintNow = False
-		print counter, "/", len(sents)
+		print "{}/{} sentences have been parsed.".format(counter, len(sents))
 
 
 
