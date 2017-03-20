@@ -14,25 +14,20 @@ class Grammar:
 			for tree in parses:
 				yield tree
 
-	def parse_and_print(self, text, toPrint=False):
+	def parse_and_print(self, text, toPrint=False, toPrintRepetitions=False):
 		""" Does not return anything, prints all the info. """
 		sents = text.splitlines()
 		counter = 0
-		toPrintNow = False
 		for sent in sents:
 			parses = self.parser.parse(sent.split())
 			number = len(list(parses))
 			print "found {} parses for sentence: \n   {}".format(number, sent)
 			if number > 0:
 				counter += 1
-			if number > 1:
-				toPrintNow = True
-			if toPrint or toPrintNow:
+			if toPrint or (number > 1 and toPrintRepetitions):
 				for tree in self.parser.parse(sent.split()):
 					print tree
 					print "--------------"
-				if toPrintNow:
-					toPrintNow = False
 		print "{}/{} sentences have been parsed.".format(counter, len(sents))
 
 
