@@ -5,7 +5,7 @@ cfg = CFG.fromstring("""
 	QuestionWord -> WRB
 	Auxiliary -> 'does' | 'do' | 'did'
 	PP -> IN DT NN | IN NN
-	NP -> NP CC NP | NN | DT Noun | JJS NN | DT Noun PP
+	NP -> NP CC NP | NN | DT Noun | JJS NN | NP PP
 	NN -> ProperNoun | Noun 
 	JJS -> JJS JJ | JJ
 	VP -> V | V NP NP | V NP | VP CC VP | VP PP
