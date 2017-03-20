@@ -8,25 +8,26 @@ cfg_str ="""\
 	Question[NUM=?n] -> WhP Auxiliary[NUM=?n] NP[NUM=?n] VP
 	WhP -> WRB
 	NP[NUM=pl] -> NP[NUM=?n] CC NP[NUM=?n]
-	NP[NUM=?n, PER=?p] -> DT[NUM=?n] Nominal[NUM=?n] | Nominal[NUM=?n] | ProperNoun[NUM=?n] | Pronoun[NUM=?n, PER=?p] | AP NP[NUM=?n] | NP[NUM=?n] PP
+	NP[NUM=?n, PER=?p] -> DT[NUM=?n] Nominal[NUM=?n] | Nominal[NUM=?n] | ProperNoun[NUM=?n, PER=?p] | Pronoun[NUM=?n, PER=?p] | AP NP[NUM=?n] | NP[NUM=?n] PP
 	VP[NUM=?n, TENSE=?t, PER=?p] -> V[NUM=?n, TENSE=?t, PER=?p]| V[NUM=?n, TENSE=?t, PER=?p] NP NP | V[NUM=?n, TENSE=?t, PER=?p] NP 
-	VP[NUM=?n, TENSE=?t, PER=?p] -> VP[NUM=?n, TENSE=?t, PER=?p] CC VP | V[NUM=?n, TENSE=?t, PER=?p] PP  
+	VP[NUM=?n, TENSE=?t, PER=?p] -> VP[NUM=?n, TENSE=?t, PER=?p] CC VP[NUM=?n, TENSE=?t, PER=?p] | V[NUM=?n, TENSE=?t, PER=?p] PP  
 	AP -> RB JJ | JJ
 	Nominal[NUM=?n] -> Nominal[NUM=?n] Noun[NUM=?n] | Noun[NUM=?n] 
 	PP -> IN NP
 
+	ARG[CAT=np] -> NP
+	ARG[CAT=vp] -> VP
 	# Words
 
-	V[NUM=sg, PER=3, TENSE=pres] -> 'barks' | 'laughs' | 'eats' | 'feeds' | 'thinks' | 'drinks' | 'does'
+	V[NUM=sg, PER=3] -> 'barks' | 'laughs' | 'eats' | 'feeds' | 'thinks' | 'drinks' | 'does'
  	V[TENSE=past] -> 'barked' | 'laughed' | 'ate' | 'fed' | 'thought' | 'drank' | 'did'
  	V[TENSE=prespart] -> 'barking' | 'laughing' | 'eating' | 'feeding' | 'thinking' | 'drinking' | 'doing'
- 	V -> 'bark' | 'laugh' | 'eat' | 'feed' | 'think' | 'drink' | 'do'
+ 	V[NUM=pl] -> 'bark' | 'laugh' | 'eat' | 'feed' | 'think' | 'drink' | 'do'
  	Auxiliary -> 'does' | 'do' | 'did'
- 	ProperNoun[NUM=sg] -> 'Gromit' | 'Wallace'
- 	Pronoun[PER=1, NUM=sg] -> 'I' 
+ 	ProperNoun[NUM=sg, PER=3] -> 'Gromit' | 'Wallace'
+ 	Pronoun[PER=1] -> 'I' | 'we'
  	Pronoun[PER=2] -> 'you'
- 	Pronoun[PER=3, NUM=sg] -> 'he' | 'she' | 'it'
- 	Pronoun[PER=1, NUM=pl] -> 'we' 
+ 	Pronoun[NUM=sg, PER=3] -> 'he' | 'she' | 'it'
  	Pronoun[PER=3, NUM=pl] -> 'they' 
 	Noun[NUM=sg] -> 'cheese' | 'water' | 'kitchen' | 'dinner'
 	DT[NUM=sg] -> 'a' | 'an' 
@@ -52,12 +53,6 @@ when does Wallace eat cheese
 """
 
 invalid = """\
-I bark
-I barks
-you bark 
-you barks 
-he bark 
-they laughs
 Gromit bark
 when do Gromit eats cheese
 Gromit barks the kitchen
