@@ -8,7 +8,7 @@ cfg = CFG.fromstring("""
 	NP -> NP CC NP | NN | DT Noun | JJS NN | DT Noun PP
 	NN -> ProperNoun | Noun 
 	JJS -> JJS JJ | JJ
-	VP -> V | V NN NN | V NP | VP CC VP | VP PP
+	VP -> V | V NN NP | V NP | VP CC VP | VP PP
 	V -> VBZ | VB | VBD | VBG
 	VBZ -> 'barks' | 'laughs' | 'eats' | 'feeds' | 'thinks' | 'drinks' | 'does'
 	VB -> 'bark' | 'laugh' | 'eat' | 'feed' | 'think' | 'drink' | 'do'
@@ -19,7 +19,7 @@ cfg = CFG.fromstring("""
 	DT -> 'a' | 'the' | 'an' | 'my'
 	IN -> 'in' | 'on' | 'at' | 'after' | 'when'
 	JJ -> 'tasty' | 'soft' 
-	CC -> 'and' | 'but' 
+	CC -> 'and' | 'but' | 'or'
 	RB -> 'seldom' | 'often'
 	WRB -> 'when'
 	""")
