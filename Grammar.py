@@ -22,14 +22,10 @@ class Grammar:
 		for sent in sents:
 			parses = self.parser.parse(sent.split())
 			number = len(list(parses))
-			if number == 0:
-				print "No parsing trees for sentence: "
-				print "-- ", sent
+			print "found {0} parses for sentence: \n   {1}".format(number, sent)
 			if number > 0:
-				counter +=1
+				counter += 1
 			if number > 1:
-				print number, "trees for sentence:"
-				print "-- ", sent
 				toPrintNow = True
 			if toPrint or toPrintNow:
 				for tree in self.parser.parse(sent.split()):
