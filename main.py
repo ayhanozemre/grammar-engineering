@@ -1,23 +1,36 @@
 from Grammar import *
 
 cfg_str ="""\
-	S -> NP VP | NP RB VP | Question | S CC S | NP V S | IN S 
-	Question -> WhP Auxiliary NP VP
+
+	# Grammar
+
+	S -> NP[NUM=?n, PER=?p] VP[NUM=?n, PER=?p] | NP[NUM=?n, PER=?p] RB VP[NUM=?n, PER=?p] | Question[NUM=?n] | NP[NUM=?n, PER=?p] V[NUM=?n, PER=?p] S | IN S 
+	Question[NUM=?n] -> WhP Auxiliary[NUM=?n] NP[NUM=?n] VP
 	WhP -> WRB
-	NP -> NP CC NP | DT Nominal | Nominal | ProperNoun | AP NP | NP PP
-	VP -> V | V NP NP | V NP | VP CC VP | V PP  
+	NP[NUM=pl] -> NP[NUM=?n] CC NP[NUM=?n]
+	NP[NUM=?n, PER=?p] -> DT[NUM=?n] Nominal[NUM=?n] | Nominal[NUM=?n] | ProperNoun[NUM=?n] | Pronoun[NUM=?n, PER=?p] | AP NP[NUM=?n] | NP[NUM=?n] PP
+	VP[NUM=?n, TENSE=?t, PER=?p] -> V[NUM=?n, TENSE=?t, PER=?p]| V[NUM=?n, TENSE=?t, PER=?p] NP NP | V[NUM=?n, TENSE=?t, PER=?p] NP 
+	VP[NUM=?n, TENSE=?t, PER=?p] -> VP[NUM=?n, TENSE=?t, PER=?p] CC VP | V[NUM=?n, TENSE=?t, PER=?p] PP  
 	AP -> RB JJ | JJ
-	Nominal -> Nominal Noun | Noun 
+	Nominal[NUM=?n] -> Nominal[NUM=?n] Noun[NUM=?n] | Noun[NUM=?n] 
 	PP -> IN NP
-	V -> VBZ | VB | VBD | VBG
-	VBZ -> 'barks' | 'laughs' | 'eats' | 'feeds' | 'thinks' | 'drinks' | 'does'
-	VB -> 'bark' | 'laugh' | 'eat' | 'feed' | 'think' | 'drink' | 'do'
- 	VBD -> 'barked' | 'laughed' | 'ate' | 'fed' | 'thought' | 'drank' | 'did'
- 	VBG -> 'barking' | 'laughing' | 'eating' | 'feeding' | 'thinking' | 'drinking' | 'doing'
+
+	# Words
+
+	V[NUM=sg, PER=3, TENSE=pres] -> 'barks' | 'laughs' | 'eats' | 'feeds' | 'thinks' | 'drinks' | 'does'
+ 	V[TENSE=past] -> 'barked' | 'laughed' | 'ate' | 'fed' | 'thought' | 'drank' | 'did'
+ 	V[TENSE=prespart] -> 'barking' | 'laughing' | 'eating' | 'feeding' | 'thinking' | 'drinking' | 'doing'
+ 	V -> 'bark' | 'laugh' | 'eat' | 'feed' | 'think' | 'drink' | 'do'
  	Auxiliary -> 'does' | 'do' | 'did'
- 	ProperNoun -> 'Gromit' | 'Wallace'
-	Noun -> 'cheese' | 'water' | 'kitchen' | 'dinner'
-	DT -> 'a' | 'the' | 'an' | 'my'
+ 	ProperNoun[NUM=sg] -> 'Gromit' | 'Wallace'
+ 	Pronoun[PER=1, NUM=sg] -> 'I' 
+ 	Pronoun[PER=2] -> 'you'
+ 	Pronoun[PER=3, NUM=sg] -> 'he' | 'she' | 'it'
+ 	Pronoun[PER=1, NUM=pl] -> 'we' 
+ 	Pronoun[PER=3, NUM=pl] -> 'they' 
+	Noun[NUM=sg] -> 'cheese' | 'water' | 'kitchen' | 'dinner'
+	DT[NUM=sg] -> 'a' | 'an' 
+	DT -> 'the' | 'my'
 	IN -> 'in' | 'on' | 'at' | 'after' | 'when'
 	JJ -> 'tasty' | 'soft' 
 	CC -> 'and' | 'but' | 'or'
@@ -38,9 +51,22 @@ when Gromit barks Wallace feeds Gromit
 when does Wallace eat cheese
 """
 
+invalid = """\
+I bark
+I barks
+you bark 
+you barks 
+he bark 
+they laughs
+Gromit bark
+when do Gromit eats cheese
+Gromit barks the kitchen
+"""
+
 def main():
 	g = Grammar(cfg_str)
 	g.parse_and_print(text)
+	g.parse_and_print(invalid, True)
 
 if __name__ == '__main__':
 	main()
