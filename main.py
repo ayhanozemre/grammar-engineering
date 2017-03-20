@@ -1,5 +1,7 @@
 from nltk import *
-cfg = CFG.fromstring("""
+from Grammar import *
+
+cfg_str ="""\
 	S -> NP VP | NP RB VP | Question | S CC S | NP V S | IN S 
 	Question -> WhP Auxiliary NP VP
 	WhP -> WRB
@@ -22,12 +24,9 @@ cfg = CFG.fromstring("""
 	CC -> 'and' | 'but' | 'or'
 	RB -> 'seldom' | 'often'
 	WRB -> 'when'
-	""")
+	"""
 
-cfparser = ChartParser(cfg)
-text = """"""
-
-done = """\
+text = """\
 Gromit barks
 Gromit barked
 Wallace and Gromit eat cheese
@@ -40,30 +39,9 @@ when Gromit barks Wallace feeds Gromit
 when does Wallace eat cheese
 """
 
+def main():
+	g = Grammar(cfg_str)
+	g.parse_and_print(text)
 
-def test(text, toPrint=False):
-	sents = text.splitlines()
-	counter = 0
-	toPrintNow = False
-	for sent in sents:
-		parses = cfparser.parse(sent.split())
-		number = len(list(parses))
-		if number == 0:
-			print "No parsing trees for sentence: "
-			print "-- ", sent
-		if number > 0:
-			counter +=1
-		if number>1:
-			print number, "trees for sentence:"
-			print "-- ", sent
-			toPrintNow = True
-		if toPrint or toPrintNow:
-			for tree in cfparser.parse(sent.split()):
-				print tree
-				print "--------------"
-			if toPrintNow:
-				toPrintNow = False
-	print counter, "/", len(sents)
-
-test(text, True)
-test(done)
+if __name__ == '__main__':
+	main()
