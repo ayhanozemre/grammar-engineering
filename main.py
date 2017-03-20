@@ -1,4 +1,3 @@
-from nltk import *
 from Grammar import *
 
 cfg_str ="""\
