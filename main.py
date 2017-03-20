@@ -1,19 +1,19 @@
 from nltk import *
 cfg = CFG.fromstring("""
 	S -> NP VP | NP RB VP | Question | S CC S | NP V S | IN S 
-	Question -> QuestionWord Auxiliary NP VP
-	QuestionWord -> WRB
-	Auxiliary -> 'does' | 'do' | 'did'
-	PP -> IN DT NN | IN NN
-	NP -> NP CC NP | NN | DT Noun | JJS NN | NP PP
-	NN -> ProperNoun | Noun 
-	JJS -> JJS JJ | JJ
-	VP -> V | V NP NP | V NP | VP CC VP | VP PP
+	Question -> WhP Auxiliary NP VP
+	WhP -> WRB
+	NP -> NP CC NP | DT Nominal | Nominal | ProperNoun | AP NP | NP PP
+	VP -> V | V NP NP | V NP | VP CC VP | V PP  
+	AP -> RB JJ | JJ
+	Nominal -> Nominal Noun | Noun 
+	PP -> IN NP
 	V -> VBZ | VB | VBD | VBG
 	VBZ -> 'barks' | 'laughs' | 'eats' | 'feeds' | 'thinks' | 'drinks' | 'does'
 	VB -> 'bark' | 'laugh' | 'eat' | 'feed' | 'think' | 'drink' | 'do'
  	VBD -> 'barked' | 'laughed' | 'ate' | 'fed' | 'thought' | 'drank' | 'did'
  	VBG -> 'barking' | 'laughing' | 'eating' | 'feeding' | 'thinking' | 'drinking' | 'doing'
+ 	Auxiliary -> 'does' | 'do' | 'did'
  	ProperNoun -> 'Gromit' | 'Wallace'
 	Noun -> 'cheese' | 'water' | 'kitchen' | 'dinner'
 	DT -> 'a' | 'the' | 'an' | 'my'
