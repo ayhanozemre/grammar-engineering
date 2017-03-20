@@ -8,7 +8,7 @@ cfg = CFG.fromstring("""
 	NP -> NP CC NP | NN | DT Noun | JJS NN | DT Noun PP
 	NN -> ProperNoun | Noun 
 	JJS -> JJS JJ | JJ
-	VP -> V | V NN NP | V NP | VP CC VP | VP PP
+	VP -> V | V NP NP | V NP | VP CC VP | VP PP
 	V -> VBZ | VB | VBD | VBG
 	VBZ -> 'barks' | 'laughs' | 'eats' | 'feeds' | 'thinks' | 'drinks' | 'does'
 	VB -> 'bark' | 'laugh' | 'eat' | 'feed' | 'think' | 'drink' | 'do'
@@ -48,6 +48,9 @@ def test(text, toPrint=False):
 	for sent in sents:
 		parses = cfparser.parse(sent.split())
 		number = len(list(parses))
+		if number == 0:
+			print "No parsing trees for sentence: "
+			print "-- ", sent
 		if number > 0:
 			counter +=1
 		if number>1:
