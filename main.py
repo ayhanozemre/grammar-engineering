@@ -4,12 +4,11 @@ cfg = CFG.fromstring("""
 	Question -> QuestionWord Auxiliary NP VP
 	QuestionWord -> WRB
 	Auxiliary -> 'does' | 'do' | 'did'
-	PPS -> PP 
 	PP -> IN DT NN | IN NN
-	NP -> NP CC NP | NN | DT Noun | JJS NN | DT Noun PPS
+	NP -> NP CC NP | NN | DT Noun | JJS NN | DT Noun PP
 	NN -> ProperNoun | Noun 
 	JJS -> JJS JJ | JJ
-	VP -> V | V NN NN | V NP | VP CC VP | VP PPS
+	VP -> V | V NN NN | V NP | VP CC VP | VP PP
 	V -> VBZ | VB | VBD | VBG
 	VBZ -> 'barks' | 'laughs' | 'eats' | 'feeds' | 'thinks' | 'drinks' | 'does'
 	VB -> 'bark' | 'laugh' | 'eat' | 'feed' | 'think' | 'drink' | 'do'
