@@ -21,10 +21,10 @@ class Grammar:
 		for sent in sents:
 			parses = self.parser.parse(sent.split())
 			number = len(list(parses))
-			print "found {} parses for sentence: \n   {}".format(number, sent)
 			if number > 0:
 				counter += 1
 			if toPrint or (number > 1 and toPrintRepetitions):
+				print "found {} parses for sentence: \n   {}".format(number, sent)
 				for tree in self.parser.parse(sent.split()):
 					print tree
 					print "--------------"
