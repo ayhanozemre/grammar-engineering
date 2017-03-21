@@ -4,10 +4,10 @@ cfg_str ="""\
 
 	# Grammar
 
-	S -> NP[NUM=?n, PER=?p] VP[NUM=?n, PER=?p, SUBCAT=?s] 
-	S -> NP[NUM=?n, PER=?p] RB VP[NUM=?n, PER=?p, SUBCAT=?s] 
+	S -> NP[NUM=?n, PER=?p] VP[NUM=?n, PER=?p, SUBCAT=nil] 
+	S -> NP[NUM=?n, PER=?p] RB VP[NUM=?n, PER=?p, SUBCAT=nil] 
 	S -> Question[NUM=?n] 
-	S -> IN[SUBCAT=[HEAD=vp, TAIL=[HEAD=pp, TAIL=nil]]]
+	S -> IN[SUBCAT=[HEAD=[HEAD=np, TAIL=vp], TAIL=[HEAD=np, TAIL=vp]]]
 
 	#S -> NP[NUM=?n, PER=?p] V[NUM=?n, PER=?p, SUBCAT=?s] S 
 	#S -> IN NP[NUM=?n, PER=?p] VP[NUM=?n, PER=?p, SUBCAT=?s] NP[NUM=?n, PER=?p] VP[NUM=?n, PER=?p, SUBCAT=?s] 
@@ -79,8 +79,7 @@ when does Wallace eat cheese
 
 to_test = """\
 Wallace thinks Gromit eats cheese and drinks water
-when Gromit barks Wallace feeds Gromit
-when does Wallace eat cheese"""
+when Gromit barks Wallace feeds Gromit"""
 
 invalid = """\
 Gromit bark
