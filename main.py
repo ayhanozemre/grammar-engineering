@@ -3,14 +3,15 @@ from Grammar import *
 cfg_str ="""\
 
 	# Grammar
-	S -> NP
-	S -> PP
 	S -> Statement[NUM=?n]
 	S -> Question[NUM=?n] 
-	S -> PP Statement[NUM=?n]
+	S -> SBAR 
+	SBAR -> WhP Statement 
+
+	Statement[SUBCAT=?rest] -> Statement[SUBCAT=[HEAD=st, TAIL=?rest]] ARG[CAT=st]
 	Statement[NUM=?n] -> NP[NUM=?n, PER=?p] VP[NUM=?n, PER=?p, SUBCAT=nil] | NP[NUM=?n, PER=?p] RB VP[NUM=?n, PER=?p, SUBCAT=nil] 
 
-	Question[NUM=?n] -> WhP Auxiliary[NUM=?n, PER=?p] NP[NUM=?n, PER=?p] VP[NUM=pl, SUBCAT=?s]
+	Question[NUM=?n] -> WhP Auxiliary[NUM=?n, PER=?p] NP[NUM=?n, PER=?p] VP[NUM=pl, SUBCAT=?s] | Auxiliary[NUM=?n, PER=?p] NP[NUM=?n, PER=?p] VP[NUM=pl, SUBCAT=?s]
 	WhP -> WRB
 
 	NP[NUM=pl] -> NP[NUM=?n] CC NP[NUM=?n]
@@ -88,7 +89,7 @@ def main():
 	##############################################
 	"""
 	g = Grammar(cfg_str)
-	#g.parse_and_print(text, True)
+	g.parse_and_print(text)
 	g.parse_and_print(to_test, True)
 	g.parse_and_print(invalid)
 
