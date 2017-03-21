@@ -9,24 +9,16 @@ cfg_str ="""\
 	S -> Question[NUM=?n] 
 	S -> IN[SUBCAT=[HEAD=[HEAD=np, TAIL=vp], TAIL=[HEAD=np, TAIL=vp]]]
 
-	#S -> NP[NUM=?n, PER=?p] V[NUM=?n, PER=?p, SUBCAT=?s] S 
-	#S -> IN NP[NUM=?n, PER=?p] VP[NUM=?n, PER=?p, SUBCAT=?s] NP[NUM=?n, PER=?p] VP[NUM=?n, PER=?p, SUBCAT=?s] 
-
 	Question[NUM=?n] -> WhP Auxiliary[NUM=?n, PER=?p] NP[NUM=?n, PER=?p] VP[NUM=pl, SUBCAT=?s]
 	WhP -> WRB
 
 	NP[NUM=pl] -> NP[NUM=?n] CC NP[NUM=?n]
 	NP[NUM=?n, PER=?p] -> DT[NUM=?n] Nominal[NUM=?n] | Nominal[NUM=?n] | ProperNoun[NUM=?n, PER=?p] | Pronoun[NUM=?n, PER=?p] | AP NP[NUM=?n] | NP[NUM=?n] PP
 
-	# VP[NUM=?n, TENSE=?t, PER=?p] -> V[NUM=?n, TENSE=?t, PER=?p]
-	#VP[NUM=?n, TENSE=?t, PER=?p] -> V[NUM=?n, TENSE=?t, PER=?p] NP NP 
-	#VP[NUM=?n, TENSE=?t, PER=?p] -> V[NUM=?n, TENSE=?t, PER=?p] NP 
-	#VP[NUM=?n, TENSE=?t, PER=?p] -> V[NUM=?n, TENSE=?t, PER=?p] PP
 	VP[NUM=?n, TENSE=?t, PER=?p, SUBCAT=?rest] -> VP[NUM=?n, TENSE=?t, PER=?p, SUBCAT=?rest] CC VP[NUM=?n, TENSE=?t, PER=?p, SUBCAT=?rest] 
-	  
-
 	VP[NUM=?n, PER=?p, SUBCAT=?rest] -> VP[NUM=?n, PER=?p, SUBCAT=[HEAD=?arg, TAIL=?rest]] ARG[CAT=?arg]
 	VP[NUM=?n, PER=?p, SUBCAT=?args] -> V[NUM=?n, PER=?p, SUBCAT=?args]
+
 	AP -> RB JJ | JJ
 	Nominal[NUM=?n] -> Nominal[NUM=?n] Noun[NUM=?n] | Noun[NUM=?n] 
 	PP -> IN NP
@@ -43,7 +35,7 @@ cfg_str ="""\
 	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=[HEAD=np, TAIL=nil]]] -> 'feeds' 
 	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=[HEAD=vp, TAIL=nil]]] -> 'thinks'
 	
-	# V[NUM=sg, PER=3] -> 'barks' | 'laughs' | 'eats' | 'feeds' | 'thinks' | 'drinks' | 'does'
+
  	V[TENSE=past] -> 'barked' | 'laughed' | 'ate' | 'fed' | 'thought' | 'drank' | 'did'
  	V[TENSE=prespart] -> 'barking' | 'laughing' | 'eating' | 'feeding' | 'thinking' | 'drinking' | 'doing'
  	V[NUM=pl] -> 'bark' | 'laugh' | 'eat' | 'feed' | 'think' | 'drink' | 'do'
@@ -90,7 +82,7 @@ Gromit barks the kitchen
 def main():
 	print """\
 	##############################################
-	#         Begin                              #
+	#                 Begin                      #
 	##############################################
 	"""
 	g = Grammar(cfg_str)
