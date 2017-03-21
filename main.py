@@ -30,9 +30,10 @@ cfg_str ="""\
 
 	# Words
 
-	V[NUM=sg, PER=3, SUBCAT=nil] -> 'barks' | 'lauhgs'
-	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=[HEAD=pp, TAIL=nil]]] -> 'puts' | 'eats' | 'drinks'
-	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=[HEAD=np, TAIL=nil]]] -> 'feeds' 
+	V[NUM=sg, PER=3, SUBCAT=nil] -> 'barks' | 'laughs'
+	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=[HEAD=pp, TAIL=nil]]] -> 'puts' 
+	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=[HEAD=np, TAIL=nil]]] -> 'feeds' | 'eats' | 'drinks'
+	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=nil]] -> 'feeds'
 	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=[HEAD=vp, TAIL=nil]]] -> 'thinks'
 	
 
@@ -70,6 +71,8 @@ when does Wallace eat cheese
 """
 
 to_test = """\
+Wallace feeds Gromit
+Wallace often eats tasty soft cheese in the kitchen after dinner
 Wallace thinks Gromit eats cheese and drinks water
 when Gromit barks Wallace feeds Gromit"""
 
@@ -86,6 +89,7 @@ def main():
 	##############################################
 	"""
 	g = Grammar(cfg_str)
+	#g.parse_and_print(text, True)
 	g.parse_and_print(to_test, True)
 	g.parse_and_print(invalid)
 
