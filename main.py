@@ -4,10 +4,11 @@ cfg_str ="""\
 
 	# Grammar
 
-	S -> NP[NUM=?n, PER=?p] VP[NUM=?n, PER=?p, SUBCAT=nil] 
-	S -> NP[NUM=?n, PER=?p] RB VP[NUM=?n, PER=?p, SUBCAT=nil] 
+	S -> Statement[NUM=?n]
 	S -> Question[NUM=?n] 
 	S -> IN[SUBCAT=[HEAD=[HEAD=np, TAIL=vp], TAIL=[HEAD=np, TAIL=vp]]]
+
+	Statement[NUM=?n] -> NP[NUM=?n, PER=?p] VP[NUM=?n, PER=?p, SUBCAT=nil] | NP[NUM=?n, PER=?p] RB VP[NUM=?n, PER=?p, SUBCAT=nil] 
 
 	Question[NUM=?n] -> WhP Auxiliary[NUM=?n, PER=?p] NP[NUM=?n, PER=?p] VP[NUM=pl, SUBCAT=?s]
 	WhP -> WRB
@@ -15,7 +16,7 @@ cfg_str ="""\
 	NP[NUM=pl] -> NP[NUM=?n] CC NP[NUM=?n]
 	NP[NUM=?n, PER=?p] -> DT[NUM=?n] Nominal[NUM=?n] | Nominal[NUM=?n] | ProperNoun[NUM=?n, PER=?p] | Pronoun[NUM=?n, PER=?p] | AP NP[NUM=?n] | NP[NUM=?n] PP
 
-	VP[NUM=?n, PER=?p, SUBCAT=?rest] -> VP[NUM=?n, PER=?p] CC VP[NUM=?n, PER=?p] 
+	VP[NUM=?n, PER=?p, SUBCAT=?rest] -> VP[NUM=?n, PER=?p, SUBCAT=nil] CC VP[NUM=?n, PER=?p, SUBCAT=nil] 
 	VP[NUM=?n, PER=?p, SUBCAT=?rest] -> VP[NUM=?n, PER=?p, SUBCAT=[HEAD=?arg, TAIL=?rest]] ARG[CAT=?arg]
 	VP[NUM=?n, PER=?p, SUBCAT=?args] -> V[NUM=?n, PER=?p, SUBCAT=?args]
 
@@ -27,6 +28,7 @@ cfg_str ="""\
 	ARG[CAT=vp] -> VP
 	ARG[CAT=pp] -> PP
 	ARG[CAT=ap] -> AP
+	ARG[CAT=st] -> Statement
 
 	# Words
 
@@ -34,8 +36,7 @@ cfg_str ="""\
 	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=[HEAD=pp, TAIL=nil]]] -> 'puts' 
 	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=nil]] -> 'eats' | 'drinks'
 	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=?t]] -> 'feeds'
-	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=[HEAD=vp, TAIL=nil]]] -> 'thinks'
-	
+	V[NUM=sg, PER=3, SUBCAT=[HEAD=st, TAIL=nil]] -> 'thinks'
 
  	V[TENSE=past] -> 'barked' | 'laughed' | 'ate' | 'fed' | 'thought' | 'drank' | 'did'
  	V[TENSE=prespart] -> 'barking' | 'laughing' | 'eating' | 'feeding' | 'thinking' | 'drinking' | 'doing'
@@ -71,12 +72,8 @@ when does Wallace eat cheese
 """
 
 to_test = """\
-Wallace eats cheese
-Wallace feeds Gromit
-Wallace thinks Gromit laughs
-Wallace often eats tasty soft cheese in the kitchen after dinner
 Wallace thinks Gromit eats cheese and drinks water
-when Gromit barks Wallace feeds Gromit"""
+"""
 
 invalid = """\
 Gromit bark
@@ -91,7 +88,7 @@ def main():
 	##############################################
 	"""
 	g = Grammar(cfg_str)
-	#g.parse_and_print(text)
+	g.parse_and_print(text, True)
 	g.parse_and_print(to_test, True)
 	g.parse_and_print(invalid)
 
