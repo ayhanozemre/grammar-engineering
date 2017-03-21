@@ -6,8 +6,7 @@ cfg_str ="""\
 
 	S -> Statement[NUM=?n]
 	S -> Question[NUM=?n] 
-	S -> IN[SUBCAT=[HEAD=[HEAD=np, TAIL=vp], TAIL=[HEAD=np, TAIL=vp]]]
-
+	S -> PP Statement[NUM=?n]
 	Statement[NUM=?n] -> NP[NUM=?n, PER=?p] VP[NUM=?n, PER=?p, SUBCAT=nil] | NP[NUM=?n, PER=?p] RB VP[NUM=?n, PER=?p, SUBCAT=nil] 
 
 	Question[NUM=?n] -> WhP Auxiliary[NUM=?n, PER=?p] NP[NUM=?n, PER=?p] VP[NUM=pl, SUBCAT=?s]
@@ -22,7 +21,7 @@ cfg_str ="""\
 
 	AP -> RB JJ | JJ
 	Nominal[NUM=?n] -> Nominal[NUM=?n] Noun[NUM=?n] | Noun[NUM=?n] 
-	PP -> IN NP
+	PP -> IN NP[NUM=?n, PER=?p, SUBCAT=[HEAD=?arg, TAIL=?rest]] ARG[CAT=?arg]
 
 	ARG[CAT=np] -> NP
 	ARG[CAT=vp] -> VP
@@ -72,7 +71,7 @@ when does Wallace eat cheese
 """
 
 to_test = """\
-Wallace thinks Gromit eats cheese and drinks water
+Wallace often eats tasty soft cheese in the kitchen after dinner
 """
 
 invalid = """\
@@ -88,7 +87,7 @@ def main():
 	##############################################
 	"""
 	g = Grammar(cfg_str)
-	g.parse_and_print(text, True)
+	#g.parse_and_print(text, True)
 	g.parse_and_print(to_test, True)
 	g.parse_and_print(invalid)
 
