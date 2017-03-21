@@ -3,7 +3,8 @@ from Grammar import *
 cfg_str ="""\
 
 	# Grammar
-
+	S -> NP
+	S -> PP
 	S -> Statement[NUM=?n]
 	S -> Question[NUM=?n] 
 	S -> PP Statement[NUM=?n]
@@ -21,7 +22,7 @@ cfg_str ="""\
 
 	AP -> RB JJ | JJ
 	Nominal[NUM=?n] -> Nominal[NUM=?n] Noun[NUM=?n] | Noun[NUM=?n] 
-	PP -> IN NP[NUM=?n, PER=?p, SUBCAT=[HEAD=?arg, TAIL=?rest]] ARG[CAT=?arg]
+	PP -> IN NP
 
 	ARG[CAT=np] -> NP
 	ARG[CAT=vp] -> VP
@@ -71,7 +72,7 @@ when does Wallace eat cheese
 """
 
 to_test = """\
-Wallace often eats tasty soft cheese in the kitchen after dinner
+when Gromit barks Wallace feeds Gromit
 """
 
 invalid = """\
