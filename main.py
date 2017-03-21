@@ -32,8 +32,8 @@ cfg_str ="""\
 
 	V[NUM=sg, PER=3, SUBCAT=nil] -> 'barks' | 'laughs'
 	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=[HEAD=pp, TAIL=nil]]] -> 'puts' 
-	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=[HEAD=np, TAIL=nil]]] -> 'feeds' | 'eats' | 'drinks'
-	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=nil]] -> 'feeds'
+	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=[HEAD=np, TAIL=nil]]] -> 'eats' | 'drinks'
+	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=?t]] -> 'feeds'
 	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=[HEAD=vp, TAIL=nil]]] -> 'thinks'
 	
 
@@ -62,8 +62,7 @@ Gromit barks
 Gromit barked
 Wallace and Gromit eat cheese
 Wallace and Gromit ate cheese
-Wallace feeds Gromit
-Wallace seldom feeds Gromit cheese
+
 Wallace thinks Gromit eats cheese and drinks water
 Wallace often eats tasty soft cheese in the kitchen after dinner
 when Gromit barks Wallace feeds Gromit
@@ -72,6 +71,7 @@ when does Wallace eat cheese
 
 to_test = """\
 Wallace feeds Gromit
+Wallace seldom feeds Gromit cheese
 Wallace often eats tasty soft cheese in the kitchen after dinner
 Wallace thinks Gromit eats cheese and drinks water
 when Gromit barks Wallace feeds Gromit"""
