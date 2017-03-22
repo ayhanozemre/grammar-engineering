@@ -132,10 +132,6 @@ you could have eaten the cheese
 I think you think he thinks they think they like cheese
 """
 
-to_test = """\
-Wallace should have fed Gromit cheese
-"""
-
 invalid = """\
 Gromit and Wallace barks
 Gromit likes doing
@@ -157,8 +153,9 @@ def main():
 	##############################################
 	"""
 	g = Grammar(cfg_str)
-	g.parse_and_print(text, False, False)
-	#g.parse_and_print(to_test, True)
+	print "======= Valid sentences: ======"
+	g.parse_and_print(valid)
+	print "======= Invalid sentences: ======"
 	g.parse_and_print(invalid)
 
 if __name__ == '__main__':
