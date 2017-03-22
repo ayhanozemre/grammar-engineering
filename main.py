@@ -50,7 +50,7 @@ cfg_str ="""\
 	V[NUM=sg, TENSE=pres, PER=3, SUBCAT=[HEAD=gd, TAIL=nil]] -> 'likes'
 	V[NUM=sg, TENSE=pres, PER=3, SUBCAT=[HEAD=np, TAIL=nil]] -> 'feeds'
 	V[NUM=sg, TENSE=pres, PER=3, SUBCAT=[HEAD=np, TAIL=[HEAD=np, TAIL=nil]]] -> 'feeds' | 'does'
-	V[NUM=sg, TENSE=pres, PER=3, SUBCAT=[HEAD=st, TAIL=nil]] -> 'thinks'
+	V[NUM=sg, TENSE=pres, PER=3, SUBCAT=[HEAD=st, TAIL=nil]] -> 'thinks' | 'says'
 
 	V[NUM=pl, TENSE=pres, SUBCAT=nil] -> 'bark' | 'laugh' | 'eat'
 	V[NUM=pl, TENSE=pres, SUBCAT=[HEAD=np, TAIL=[HEAD=pp, TAIL=nil]]] -> 'put' 
@@ -58,7 +58,7 @@ cfg_str ="""\
 	V[NUM=pl, TENSE=pres, SUBCAT=[HEAD=gd, TAIL=nil]] -> 'like'
 	V[NUM=pl, TENSE=pres, SUBCAT=[HEAD=np, TAIL=nil]] -> 'feed'
 	V[NUM=pl, TENSE=pres, SUBCAT=[HEAD=np, TAIL=[HEAD=np, TAIL=nil]]] -> 'feed' | 'do'
-	V[NUM=pl, TENSE=pres, SUBCAT=[HEAD=st, TAIL=nil]] -> 'think'
+	V[NUM=pl, TENSE=pres, SUBCAT=[HEAD=st, TAIL=nil]] -> 'think' | 'say'
 
 	V[TENSE=past, SUBCAT=nil] -> 'barked' | 'laughed' | 'ate'
 	V[TENSE=past, SUBCAT=[HEAD=np, TAIL=[HEAD=pp, TAIL=nil]]] -> 'put' 
@@ -66,7 +66,7 @@ cfg_str ="""\
 	V[TENSE=past, SUBCAT=[HEAD=gd, TAIL=nil]] -> 'liked'
 	V[TENSE=past, SUBCAT=[HEAD=np, TAIL=nil]] -> 'fed'
 	V[TENSE=past, SUBCAT=[HEAD=np, TAIL=[HEAD=np, TAIL=nil]]] -> 'fed' | 'did'
-	V[TENSE=past, SUBCAT=[HEAD=st, TAIL=nil]] -> 'thought'
+	V[TENSE=past, SUBCAT=[HEAD=st, TAIL=nil]] -> 'thought' | 'said'
 
 	V[TENSE=pastpart, SUBCAT=nil] -> 'barked' | 'laughed' | 'eaten'
 	V[TENSE=pastpart, SUBCAT=[HEAD=np, TAIL=[HEAD=pp, TAIL=nil]]] -> 'put' 
@@ -74,14 +74,14 @@ cfg_str ="""\
 	V[TENSE=pastpart, SUBCAT=[HEAD=gd, TAIL=nil]] -> 'liked'
 	V[TENSE=pastpart, SUBCAT=[HEAD=np, TAIL=nil]] -> 'fed'
 	V[TENSE=pastpart, SUBCAT=[HEAD=np, TAIL=[HEAD=np, TAIL=nil]]] -> 'fed' | 'done'
-	V[TENSE=pastpart, SUBCAT=[HEAD=st, TAIL=nil]] -> 'thought'
+	V[TENSE=pastpart, SUBCAT=[HEAD=st, TAIL=nil]] -> 'thought' | 'said'
 
 	V[TENSE=prespart, SUBCAT=nil] -> 'barking' | 'laughing' | 'eating'
 	V[TENSE=prespart, SUBCAT=[HEAD=np, TAIL=[HEAD=pp, TAIL=nil]]] -> 'putting' 
 	V[TENSE=prespart, SUBCAT=[HEAD=np, TAIL=nil]] -> 'eating' | 'drinking' | 'liking' | 'having'
 	V[TENSE=prespart, SUBCAT=[HEAD=np, TAIL=nil]] -> 'feeding'
 	V[TENSE=prespart, SUBCAT=[HEAD=np, TAIL=[HEAD=np, TAIL=nil]]] -> 'feeding' | 'doing'
-	V[TENSE=prespart, SUBCAT=[HEAD=st, TAIL=nil]] -> 'thinking'
+	V[TENSE=prespart, SUBCAT=[HEAD=st, TAIL=nil]] -> 'thinking' | 'saying'
 
 	HV[NUM=sg, PER=3] -> 'has' 
 	HV[NUM=pl] -> 'have'
@@ -110,7 +110,7 @@ cfg_str ="""\
 	MD -> 'should' | 'could' | 'may' | 'might'
 	"""
 
-text = """\
+valid = """\
 Gromit barks
 Gromit barked
 Wallace and Gromit eat cheese
@@ -130,6 +130,11 @@ what cheese does Wallace think Gromit eats
 I like you
 you could have eaten the cheese
 I think you think he thinks they think they like cheese
+when I laugh you should feed Gromit
+he has put water on the cheese
+he thinks he has put cheese in the kitchen
+he said he put the cheese in the kitchen
+he said he thought they said they put cheese in the kitchen
 """
 
 invalid = """\
@@ -144,6 +149,8 @@ Gromit barks the kitchen
 Wallace should has feed Gromit cheese
 Wallace should has fed Gromit cheese
 Wallace should have feed Gromit cheese
+I like
+when I laugh
 """
 
 def main():
