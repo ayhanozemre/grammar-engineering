@@ -28,7 +28,7 @@ cfg_str ="""\
 	VP[NUM=?n, PER=?p, TENSE=prespart, SUBCAT=?args] -> BE[NUM=?n, PER=?p] V[TENSE=prespart, SUBCAT=?args] 
 
 	VP[NUM=?n, PER=?p, TENSE=?t, SUBCAT=?args] -> RB VP[NUM=?n, PER=?p, TENSE=?t, SUBCAT=?args]
-	VP[NUM=?n, PER=?p, TENSE=?t, SUBCAT=?args] -> MD VP[NUM=pl, TENSE=presperf, PER=?p, SUBCAT=?args] | MD VP[NUM=pl, TENSE=pres, PER=?p, SUBCAT=?args]
+	VP[NUM=?n, PER=?p, TENSE=?t, SUBCAT=?args] -> MD VP[NUM=pl, TENSE=presperf, PER=?p, SUBCAT=nil] | MD VP[NUM=pl, TENSE=pres, PER=?p, SUBCAT=nil]
 	VP[NUM=?n, TENSE=presperf, SUBCAT=?args] -> HV[NUM=?n, PER=?p, TENSE=pres] V[TENSE=pastpart, SUBCAT=?args]
 
 	AP -> RB JJ | JJ
@@ -122,6 +122,7 @@ Wallace often eats tasty soft cheese in the kitchen after dinner
 when Gromit barks Wallace feeds Gromit
 when does Wallace eat cheese
 Wallace likes eating cheese
+Wallace likes eating
 Wallace should have fed Gromit cheese
 what does Gromit eat 
 what cheese does Gromit eat 
@@ -129,8 +130,7 @@ what cheese does Wallace think Gromit eats
 """
 
 to_test = """\
-he likes eating cheese 
-he likes eating
+Wallace should have fed Gromit cheese
 """
 
 invalid = """\
