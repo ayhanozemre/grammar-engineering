@@ -21,11 +21,14 @@ cfg_str ="""\
 	NP[NUM=?n, PER=?p] -> DT[NUM=?n] Nominal[NUM=?n] | Nominal[NUM=?n] | ProperNoun[NUM=?n, PER=?p] | Pronoun[NUM=?n, PER=?p] | AP NP[NUM=?n] | NP[NUM=?n] PP
 	NP -> VP[TENSE=prespart, SUBCAT=?args]
 
-	VP[NUM=?n, PER=?p, SUBCAT=?rest] -> VP[NUM=?n, PER=?p, SUBCAT=nil] CC VP[NUM=?n, PER=?p, SUBCAT=nil] 
-	VP[NUM=?n, PER=?p, SUBCAT=?rest] -> VP[NUM=?n, PER=?p, SUBCAT=[HEAD=?arg, TAIL=?rest]] ARG[CAT=?arg]
-	VP[NUM=?n, PER=?p, SUBCAT=?args] -> V[NUM=?n, PER=?p, TENSE=pres, SUBCAT=?args] | V[NUM=?n, PER=?p, TENSE=past, SUBCAT=?args] | V[NUM=?n, PER=?p, TENSE=prespart, SUBCAT=?args] 
-	VP[NUM=?n, PER=?p, SUBCAT=?args] -> RB VP[NUM=?n, PER=?p, SUBCAT=?args]
-	VP[NUM=?n, PER=?p, SUBCAT=?args] -> MD VP[NUM=pl, TENSE=presperf, PER=?p, SUBCAT=?args] | MD VP[NUM=pl, TENSE=pres, PER=?p, SUBCAT=?args]
+	VP[NUM=?n, PER=?p, TENSE=?t, SUBCAT=?rest] -> VP[NUM=?n, PER=?p, TENSE=?t, SUBCAT=nil] CC VP[NUM=?n, PER=?p, SUBCAT=nil] 
+	VP[NUM=?n, PER=?p, TENSE=?t, SUBCAT=?rest] -> VP[NUM=?n, PER=?p, TENSE=?t, SUBCAT=[HEAD=?arg, TAIL=?rest]] ARG[CAT=?arg]
+	VP[NUM=?n, PER=?p, TENSE=pres, SUBCAT=?args] -> V[NUM=?n, PER=?p, TENSE=pres, SUBCAT=?args]  
+	VP[NUM=?n, PER=?p, TENSE=past, SUBCAT=?args] -> V[NUM=?n, PER=?p, TENSE=past, SUBCAT=?args] 
+	VP[NUM=?n, PER=?p, TENSE=prespart, SUBCAT=?args] -> V[NUM=?n, PER=?p, TENSE=prespart, SUBCAT=?args] 
+
+	VP[NUM=?n, PER=?p, TENSE=?t, SUBCAT=?args] -> RB VP[NUM=?n, PER=?p, TENSE=?t, SUBCAT=?args]
+	VP[NUM=?n, PER=?p, TENSE=?t, SUBCAT=?args] -> MD VP[NUM=pl, TENSE=presperf, PER=?p, SUBCAT=?args] | MD VP[NUM=pl, TENSE=pres, PER=?p, SUBCAT=?args]
 	VP[NUM=?n, TENSE=presperf, SUBCAT=?args] -> HV[NUM=?n, PER=?p, TENSE=pres] V[TENSE=pastpart, SUBCAT=?args]
 
 	AP -> RB JJ | JJ
@@ -75,7 +78,8 @@ cfg_str ="""\
 	V[TENSE=prespart, SUBCAT=[HEAD=np, TAIL=[HEAD=np, TAIL=nil]]] -> 'feeding' | 'doing'
 	V[TENSE=prespart, SUBCAT=[HEAD=st, TAIL=nil]] -> 'thinking'
 
-	HV -> 'has' | 'have'
+	HV[NUM=sg, PER=3] -> 'has' 
+	HV[NUM=pl] -> 'have'
 
  	Auxiliary[NUM=sg, PER=3] -> 'does'
  	Auxiliary[NUM=pl] -> 'do' | 'did'
@@ -116,7 +120,7 @@ what cheese does Wallace think Gromit eats
 """
 
 to_test = """\
-eating cheese
+Wallace should has fed Gromit cheese
 """
 
 invalid = """\
