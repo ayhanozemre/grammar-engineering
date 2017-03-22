@@ -23,7 +23,7 @@ cfg_str ="""\
 
 	VP[NUM=?n, PER=?p, SUBCAT=?rest] -> VP[NUM=?n, PER=?p, SUBCAT=nil] CC VP[NUM=?n, PER=?p, SUBCAT=nil] 
 	VP[NUM=?n, PER=?p, SUBCAT=?rest] -> VP[NUM=?n, PER=?p, SUBCAT=[HEAD=?arg, TAIL=?rest]] ARG[CAT=?arg]
-	VP[NUM=?n, PER=?p, SUBCAT=?args] -> V[NUM=?n, PER=?p, TENSE=pres, SUBCAT=?args] | V[NUM=?n, PER=?p, TENSE=past, SUBCAT=?args] 
+	VP[NUM=?n, PER=?p, SUBCAT=?args] -> V[NUM=?n, PER=?p, TENSE=pres, SUBCAT=?args] | V[NUM=?n, PER=?p, TENSE=past, SUBCAT=?args] | V[NUM=?n, PER=?p, TENSE=prespart, SUBCAT=?args] 
 	VP[NUM=?n, PER=?p, SUBCAT=?args] -> RB VP[NUM=?n, PER=?p, SUBCAT=?args]
 	VP[NUM=?n, PER=?p, SUBCAT=?args] -> MD VP[NUM=pl, TENSE=presperf, PER=?p, SUBCAT=?args] | MD VP[NUM=pl, TENSE=pres, PER=?p, SUBCAT=?args]
 	VP[NUM=?n, TENSE=presperf, SUBCAT=?args] -> HV[NUM=?n, PER=?p, TENSE=pres] V[TENSE=pastpart, SUBCAT=?args]
@@ -62,11 +62,11 @@ cfg_str ="""\
 	V[TENSE=past, SUBCAT=[HEAD=st, TAIL=nil]] -> 'thought'
 
 	V[TENSE=pastpart, SUBCAT=nil] -> 'barked' | 'laughed' | 'eaten'
-	V[TENSE=pastpart, SUBCAT=nil] -> 'put' 
-	V[TENSE=pastpart, SUBCAT=nil] -> 'eaten' | 'drunk' | 'liked' | 'had'
-	V[TENSE=pastpart, SUBCAT=nil] -> 'fed'
-	V[TENSE=pastpart, SUBCAT=nil] -> 'fed' | 'done'
-	V[TENSE=pastpart, SUBCAT=nil] -> 'thought'
+	V[TENSE=pastpart, SUBCAT=[HEAD=np, TAIL=[HEAD=pp, TAIL=nil]]] -> 'put' 
+	V[TENSE=pastpart, SUBCAT=[HEAD=np, TAIL=nil]] -> 'eaten' | 'drunk' | 'liked' | 'had'
+	V[TENSE=pastpart, SUBCAT=[HEAD=np, TAIL=nil]] -> 'fed'
+	V[TENSE=pastpart, SUBCAT=[HEAD=np, TAIL=[HEAD=np, TAIL=nil]]] -> 'fed' | 'done'
+	V[TENSE=pastpart, SUBCAT=[HEAD=st, TAIL=nil]] -> 'thought'
 
 	V[TENSE=prespart, SUBCAT=nil] -> 'barking' | 'laughing' | 'eating'
 	V[TENSE=prespart, SUBCAT=[HEAD=np, TAIL=[HEAD=pp, TAIL=nil]]] -> 'putting' 
@@ -116,7 +116,7 @@ what cheese does Wallace think Gromit eats
 """
 
 to_test = """\
-Gromit barked
+eating cheese
 """
 
 invalid = """\
