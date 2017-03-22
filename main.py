@@ -3,7 +3,6 @@ from Grammar import *
 cfg_str ="""\
 
 	# Grammar
-	S -> SQ
 	S -> Statement
 	S -> Question 
 	S -> SBAR 
@@ -18,7 +17,7 @@ cfg_str ="""\
 	SQ -> Auxiliary[NUM=?n, PER=?p] NP[NUM=?n, PER=?p] VP[NUM=pl, SUBCAT=nil]
 	
 
-	NP[NUM=pl] -> NP[NUM=?n] CC NP[NUM=?n]
+	NP[NUM=pl] -> NP CC NP
 	NP[NUM=?n, PER=?p] -> DT[NUM=?n] Nominal[NUM=?n] | Nominal[NUM=?n] | ProperNoun[NUM=?n, PER=?p] | Pronoun[NUM=?n, PER=?p] | AP NP[NUM=?n] | NP[NUM=?n] PP
 
 	VP[NUM=?n, PER=?p, SUBCAT=?rest] -> VP[NUM=?n, PER=?p, SUBCAT=nil] CC VP[NUM=?n, PER=?p, SUBCAT=nil] 
@@ -81,6 +80,7 @@ when does Wallace eat cheese
 """
 
 to_test = """\
+she and they eat
 """
 
 invalid = """\
