@@ -9,7 +9,7 @@ cfg_str ="""\
 	S -> SBAR 
 	SBAR -> WhP Statement Statement  
 
-	Statement[NUM=?n] -> NP[NUM=?n, PER=?p] VP[NUM=?n, PER=?p, SUBCAT=nil] 
+	Statement -> NP[NUM=?n, PER=?p] VP[NUM=?n, PER=?p, SUBCAT=nil] 
 
 	Question -> WhP SQ 
 	WhP -> WhNP | WhADVP
@@ -25,7 +25,8 @@ cfg_str ="""\
 	VP[NUM=?n, PER=?p, SUBCAT=?rest] -> VP[NUM=?n, PER=?p, SUBCAT=[HEAD=?arg, TAIL=?rest]] ARG[CAT=?arg]
 	VP[NUM=?n, PER=?p, SUBCAT=?args] -> V[NUM=?n, PER=?p, SUBCAT=?args]
 	VP[NUM=?n, PER=?p, SUBCAT=?args] -> RB VP[NUM=?n, PER=?p, SUBCAT=?args]
-	VP[NUM=?n, PER=?p, SUBCAT=?args] -> MD VP[NUM=?n, PER=?p, SUBCAT=?args]
+	VP[NUM=?n, PER=?p, SUBCAT=?args] -> MD VP[NUM=pl, TENSE=presperf, PER=?p, SUBCAT=?args] | MD VP[NUM=pl, TENSE=pres, PER=?p, SUBCAT=?args]
+	VP[NUM=?n, TENSE=presperf, SUBCAT=?args] -> HV[NUM=?n, PER=?p, TENSE=pres] V[TENSE=past, SUBCAT=?args]
 
 	AP -> RB JJ | JJ
 	Nominal[NUM=?n] -> Nominal[NUM=?n] Noun[NUM=?n] | Noun[NUM=?n] 
@@ -39,19 +40,20 @@ cfg_str ="""\
 
 	# Words
 
-	V[NUM=sg, PER=3, SUBCAT=nil] -> 'barks' | 'laughs' | 'eats'
-	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=[HEAD=pp, TAIL=nil]]] -> 'puts' 
-	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=nil]] -> 'eats' | 'drinks' | 'likes' | 'has'
-	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=nil]] -> 'feeds'
-	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=[HEAD=np, TAIL=nil]]] -> 'feeds' | 'does'
-	V[NUM=sg, PER=3, SUBCAT=[HEAD=st, TAIL=nil]] -> 'thinks'
+	V[NUM=sg, TENSE=pres, PER=3, SUBCAT=nil] -> 'barks' | 'laughs' | 'eats'
+	V[NUM=sg, TENSE=pres, PER=3, SUBCAT=[HEAD=np, TAIL=[HEAD=pp, TAIL=nil]]] -> 'puts' 
+	V[NUM=sg, TENSE=pres, PER=3, SUBCAT=[HEAD=np, TAIL=nil]] -> 'eats' | 'drinks' | 'likes' | 'has'
+	V[NUM=sg, TENSE=pres, PER=3, SUBCAT=[HEAD=np, TAIL=nil]] -> 'feeds'
+	V[NUM=sg, TENSE=pres, PER=3, SUBCAT=[HEAD=np, TAIL=[HEAD=np, TAIL=nil]]] -> 'feeds' | 'does'
+	V[NUM=sg, TENSE=pres, PER=3, SUBCAT=[HEAD=st, TAIL=nil]] -> 'thinks'
 
-	V[NUM=pl, SUBCAT=nil] -> 'bark' | 'laugh' | 'eat'
-	V[NUM=pl, SUBCAT=[HEAD=np, TAIL=[HEAD=pp, TAIL=nil]]] -> 'put' 
-	V[NUM=pl, SUBCAT=[HEAD=np, TAIL=nil]] -> 'eat' | 'drink' | 'like' | 'have'
-	V[NUM=pl, SUBCAT=[HEAD=np, TAIL=nil]] -> 'feed'
-	V[NUM=pl, SUBCAT=[HEAD=np, TAIL=[HEAD=np, TAIL=nil]]] -> 'feed' | 'do'
-	V[NUM=pl, SUBCAT=[HEAD=st, TAIL=nil]] -> 'think'
+	V[NUM=pl, TENSE=pres, SUBCAT=nil] -> 'bark' | 'laugh' | 'eat'
+	V[NUM=pl, TENSE=pres, SUBCAT=[HEAD=np, TAIL=[HEAD=pp, TAIL=nil]]] -> 'put' 
+	V[NUM=pl, TENSE=pres, SUBCAT=[HEAD=np, TAIL=nil]] -> 'eat' | 'drink' | 'like' | 'have'
+	V[NUM=pl, TENSE=pres, SUBCAT=[HEAD=np, TAIL=nil]] -> 'feed'
+	V[NUM=pl, TENSE=pres, SUBCAT=[HEAD=np, TAIL=[HEAD=np, TAIL=nil]]] -> 'feed' | 'do'
+	V[NUM=pl, TENSE=pres, SUBCAT=[HEAD=st, TAIL=nil]] -> 'think'
+
 
 	V[TENSE=past, SUBCAT=nil] -> 'barked' | 'laughed' | 'ate'
 	V[TENSE=past, SUBCAT=[HEAD=np, TAIL=[HEAD=pp, TAIL=nil]]] -> 'put' 
@@ -113,14 +115,14 @@ what cheese does Wallace think Gromit eats
 """
 
 to_test = """\
-I like thinking
-Wallace likes eating cheese
+Wallace should have fed Gromit cheese
 """
 
 invalid = """\
 Gromit bark
 when do Gromit eat cheese
 Gromit barks the kitchen
+Wallace should has feed Gromit cheese
 """
 
 def main():
