@@ -19,13 +19,13 @@ cfg_str ="""\
 
 	NP[NUM=pl] -> NP CC NP
 	NP[NUM=?n, PER=?p] -> DT[NUM=?n] Nominal[NUM=?n] | Nominal[NUM=?n] | ProperNoun[NUM=?n, PER=?p] | Pronoun[NUM=?n, PER=?p] | AP NP[NUM=?n] | NP[NUM=?n] PP
-	NP -> VP[TENSE=prespart, SUBCAT=?args]
+	NP -> V[TENSE=prespart, SUBCAT=?args]
 
 	VP[NUM=?n, PER=?p, TENSE=?t, SUBCAT=?rest] -> VP[NUM=?n, PER=?p, TENSE=?t, SUBCAT=nil] CC VP[NUM=?n, PER=?p, SUBCAT=nil] 
 	VP[NUM=?n, PER=?p, TENSE=?t, SUBCAT=?rest] -> VP[NUM=?n, PER=?p, TENSE=?t, SUBCAT=[HEAD=?arg, TAIL=?rest]] ARG[CAT=?arg]
 	VP[NUM=?n, PER=?p, TENSE=pres, SUBCAT=?args] -> V[NUM=?n, PER=?p, TENSE=pres, SUBCAT=?args]  
 	VP[NUM=?n, PER=?p, TENSE=past, SUBCAT=?args] -> V[NUM=?n, PER=?p, TENSE=past, SUBCAT=?args] 
-	VP[NUM=?n, PER=?p, TENSE=prespart, SUBCAT=?args] -> V[NUM=?n, PER=?p, TENSE=prespart, SUBCAT=?args] 
+	VP[NUM=?n, PER=?p, TENSE=prespart, SUBCAT=?args] -> BE[NUM=?n, PER=?p] V[TENSE=prespart, SUBCAT=?args] 
 
 	VP[NUM=?n, PER=?p, TENSE=?t, SUBCAT=?args] -> RB VP[NUM=?n, PER=?p, TENSE=?t, SUBCAT=?args]
 	VP[NUM=?n, PER=?p, TENSE=?t, SUBCAT=?args] -> MD VP[NUM=pl, TENSE=presperf, PER=?p, SUBCAT=?args] | MD VP[NUM=pl, TENSE=pres, PER=?p, SUBCAT=?args]
@@ -81,6 +81,10 @@ cfg_str ="""\
 	HV[NUM=sg, PER=3] -> 'has' 
 	HV[NUM=pl] -> 'have'
 
+	BE[NUM=sg, PER=1] -> 'am'
+	BE[NUM=sg, PER=3] -> 'is'
+	BE[NUM=pl] -> 'are'
+
  	Auxiliary[NUM=sg, PER=3] -> 'does'
  	Auxiliary[NUM=pl] -> 'do' | 'did'
  	ProperNoun[NUM=sg, PER=3] -> 'Gromit' | 'Wallace'
@@ -120,11 +124,12 @@ what cheese does Wallace think Gromit eats
 """
 
 to_test = """\
-Wallace should has fed Gromit cheese
+Gromit barking
 """
 
 invalid = """\
 Gromit bark
+Gromit barking
 Gromit eaten
 when do Gromit eat cheese
 Gromit barks the kitchen
