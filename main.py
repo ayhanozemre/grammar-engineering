@@ -39,14 +39,21 @@ cfg_str ="""\
 
 	V[NUM=sg, PER=3, SUBCAT=nil] -> 'barks' | 'laughs'
 	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=[HEAD=pp, TAIL=nil]]] -> 'puts' 
-	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=nil]] -> 'eats' | 'drinks'
+	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=nil]] -> 'eats' | 'drinks' | 'likes' | 'has'
 	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=nil]] -> 'feeds'
-	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=[HEAD=np, TAIL=nil]]] -> 'feeds'
+	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=[HEAD=np, TAIL=nil]]] -> 'feeds' | 'does'
 	V[NUM=sg, PER=3, SUBCAT=[HEAD=st, TAIL=nil]] -> 'thinks'
+
+	V[NUM=pl, SUBCAT=nil] -> 'bark' | 'laugh'
+	V[NUM=pl, SUBCAT=[HEAD=np, TAIL=[HEAD=pp, TAIL=nil]]] -> 'put' 
+	V[NUM=pl, SUBCAT=[HEAD=np, TAIL=nil]] -> 'eat' | 'drink' | 'like' | 'have'
+	V[NUM=pl, SUBCAT=[HEAD=np, TAIL=nil]] -> 'feed'
+	V[NUM=pl, SUBCAT=[HEAD=np, TAIL=[HEAD=np, TAIL=nil]]] -> 'feed' | 'do'
+	V[NUM=pl, SUBCAT=[HEAD=st, TAIL=nil]] -> 'think'
 
  	V[TENSE=past] -> 'barked' | 'laughed' | 'ate' | 'fed' | 'thought' | 'drank' | 'did'
  	V[TENSE=prespart] -> 'barking' | 'laughing' | 'eating' | 'feeding' | 'thinking' | 'drinking' | 'doing'
- 	V[NUM=pl] -> 'bark' | 'laugh' | 'eat' | 'feed' | 'think' | 'drink' | 'do'
+ 
  	Auxiliary[NUM=sg, PER=3] -> 'does'
  	Auxiliary[NUM=pl] -> 'do' | 'did'
  	ProperNoun[NUM=sg, PER=3] -> 'Gromit' | 'Wallace'
@@ -64,6 +71,7 @@ cfg_str ="""\
 	WRB -> 'when'
 	WP -> 'what' 
 	WDT -> 'what'
+	MD -> 'should' | 'could' | 'may' | 'might'
 	"""
 
 text = """\
@@ -77,10 +85,14 @@ Wallace thinks Gromit eats cheese and drinks water
 Wallace often eats tasty soft cheese in the kitchen after dinner
 when Gromit barks Wallace feeds Gromit
 when does Wallace eat cheese
+Wallace likes eating cheese
+Wallace should have fed Gromit cheese
+what does Gromit eat 
+what cheese does Gromit eat 
+what cheese does Wallace think Gromit eats
 """
 
 to_test = """\
-she and they eat
 """
 
 invalid = """\
@@ -97,7 +109,7 @@ def main():
 	"""
 	g = Grammar(cfg_str)
 	g.parse_and_print(text, False, False)
-	g.parse_and_print(to_test, True)
+	#g.parse_and_print(to_test, True)
 	g.parse_and_print(invalid)
 
 if __name__ == '__main__':
