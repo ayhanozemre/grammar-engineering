@@ -19,6 +19,7 @@ cfg_str ="""\
 
 	NP[NUM=pl] -> NP CC NP
 	NP[NUM=?n, PER=?p] -> DT[NUM=?n] Nominal[NUM=?n] | Nominal[NUM=?n] | ProperNoun[NUM=?n, PER=?p] | Pronoun[NUM=?n, PER=?p] | AP NP[NUM=?n] | NP[NUM=?n] PP
+	NP -> VP[TENSE=pastpart, SUBCAT=?args]
 
 	VP[NUM=?n, PER=?p, SUBCAT=?rest] -> VP[NUM=?n, PER=?p, SUBCAT=nil] CC VP[NUM=?n, PER=?p, SUBCAT=nil] 
 	VP[NUM=?n, PER=?p, SUBCAT=?rest] -> VP[NUM=?n, PER=?p, SUBCAT=[HEAD=?arg, TAIL=?rest]] ARG[CAT=?arg]
@@ -112,13 +113,8 @@ what cheese does Wallace think Gromit eats
 """
 
 to_test = """\
-what 
-when
-what cheese 
-do you eat 
-do I eat 
-does she eat 
-does she eats
+I like thinking
+Wallace likes eating cheese
 """
 
 invalid = """\
@@ -135,7 +131,7 @@ def main():
 	"""
 	g = Grammar(cfg_str)
 	g.parse_and_print(text, False, False)
-	#g.parse_and_print(to_test, True)
+	g.parse_and_print(to_test, True)
 	g.parse_and_print(invalid)
 
 if __name__ == '__main__':
