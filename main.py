@@ -127,6 +127,9 @@ Wallace should have fed Gromit cheese
 what does Gromit eat 
 what cheese does Gromit eat 
 what cheese does Wallace think Gromit eats
+I like you
+you could have eaten the cheese
+I think you think he thinks they think they like cheese
 """
 
 to_test = """\
@@ -135,6 +138,8 @@ Wallace should have fed Gromit cheese
 
 invalid = """\
 Gromit and Wallace barks
+Gromit likes doing
+I likes you
 Gromit bark
 Gromit barking
 Gromit eaten
@@ -153,7 +158,7 @@ def main():
 	"""
 	g = Grammar(cfg_str)
 	g.parse_and_print(text, False, False)
-	g.parse_and_print(to_test, True)
+	#g.parse_and_print(to_test, True)
 	g.parse_and_print(invalid)
 
 if __name__ == '__main__':
