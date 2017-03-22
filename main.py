@@ -3,7 +3,7 @@ from Grammar import *
 cfg_str ="""\
 
 	# Grammar
-
+	S -> SQ
 	S -> Statement
 	S -> Question 
 	S -> SBAR 
@@ -11,8 +11,13 @@ cfg_str ="""\
 
 	Statement[NUM=?n] -> NP[NUM=?n, PER=?p] VP[NUM=?n, PER=?p, SUBCAT=nil] 
 
-	Question[NUM=?n] -> WhP Auxiliary[NUM=?n, PER=?p] NP[NUM=?n, PER=?p] VP[NUM=pl, SUBCAT=?s] | Auxiliary[NUM=?n, PER=?p] NP[NUM=?n, PER=?p] VP[NUM=pl, SUBCAT=?s]
-	WhP -> WRB
+	Question -> WhP SQ 
+	WhP -> WhNP | WhADVP
+	WhNP -> WP | WDT Nominal 
+	WhADVP -> WRB 
+	SQ -> Auxiliary[NUM=?n, PER=?p] NP[NUM=?n, PER=?p] VP[NUM=pl, SUBCAT=nil]
+	#Question[NUM=?n] -> WhP Auxiliary[NUM=?n, PER=?p] NP[NUM=?n, PER=?p] VP[NUM=pl, SUBCAT=?s] | Auxiliary[NUM=?n, PER=?p] NP[NUM=?n, PER=?p] VP[NUM=pl, SUBCAT=?s]
+	
 
 	NP[NUM=pl] -> NP[NUM=?n] CC NP[NUM=?n]
 	NP[NUM=?n, PER=?p] -> DT[NUM=?n] Nominal[NUM=?n] | Nominal[NUM=?n] | ProperNoun[NUM=?n, PER=?p] | Pronoun[NUM=?n, PER=?p] | AP NP[NUM=?n] | NP[NUM=?n] PP
@@ -59,6 +64,8 @@ cfg_str ="""\
 	CC -> 'and' | 'but' | 'or'
 	RB -> 'seldom' | 'often'
 	WRB -> 'when'
+	WP -> 'what' 
+	WDT -> 'what'
 	"""
 
 text = """\
@@ -75,7 +82,11 @@ when does Wallace eat cheese
 """
 
 to_test = """\
-when Gromit barks Wallace feeds Gromit
+does you eat
+do you eat 
+do he eat 
+do he eats 
+does he eat
 """
 
 invalid = """\
@@ -91,8 +102,8 @@ def main():
 	##############################################
 	"""
 	g = Grammar(cfg_str)
-	g.parse_and_print(text, False, True)
-	#g.parse_and_print(to_test, True)
+	g.parse_and_print(text, False, False)
+	g.parse_and_print(to_test, True)
 	g.parse_and_print(invalid)
 
 if __name__ == '__main__':
