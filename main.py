@@ -3,6 +3,8 @@ from Grammar import *
 cfg_str ="""\
 
 	# Grammar
+	S -> WhP 
+	S -> SQ
 	S -> Statement
 	S -> Question 
 	S -> SBAR 
@@ -37,14 +39,14 @@ cfg_str ="""\
 
 	# Words
 
-	V[NUM=sg, PER=3, SUBCAT=nil] -> 'barks' | 'laughs'
+	V[NUM=sg, PER=3, SUBCAT=nil] -> 'barks' | 'laughs' | 'eats'
 	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=[HEAD=pp, TAIL=nil]]] -> 'puts' 
 	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=nil]] -> 'eats' | 'drinks' | 'likes' | 'has'
 	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=nil]] -> 'feeds'
 	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=[HEAD=np, TAIL=nil]]] -> 'feeds' | 'does'
 	V[NUM=sg, PER=3, SUBCAT=[HEAD=st, TAIL=nil]] -> 'thinks'
 
-	V[NUM=pl, SUBCAT=nil] -> 'bark' | 'laugh'
+	V[NUM=pl, SUBCAT=nil] -> 'bark' | 'laugh' | 'eat'
 	V[NUM=pl, SUBCAT=[HEAD=np, TAIL=[HEAD=pp, TAIL=nil]]] -> 'put' 
 	V[NUM=pl, SUBCAT=[HEAD=np, TAIL=nil]] -> 'eat' | 'drink' | 'like' | 'have'
 	V[NUM=pl, SUBCAT=[HEAD=np, TAIL=nil]] -> 'feed'
@@ -93,6 +95,13 @@ what cheese does Wallace think Gromit eats
 """
 
 to_test = """\
+what 
+when
+what cheese 
+do you eat 
+do I eat 
+does she eat 
+does she eats
 """
 
 invalid = """\
