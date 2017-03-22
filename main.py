@@ -19,7 +19,7 @@ cfg_str ="""\
 
 	NP[NUM=pl] -> NP CC NP
 	NP[NUM=?n, PER=?p] -> DT[NUM=?n] Nominal[NUM=?n] | Nominal[NUM=?n] | ProperNoun[NUM=?n, PER=?p] | Pronoun[NUM=?n, PER=?p] | AP NP[NUM=?n] | NP[NUM=?n] PP
-	NP -> VP[TENSE=pastpart, SUBCAT=?args]
+	NP -> VP[TENSE=prespart, SUBCAT=?args]
 
 	VP[NUM=?n, PER=?p, SUBCAT=?rest] -> VP[NUM=?n, PER=?p, SUBCAT=nil] CC VP[NUM=?n, PER=?p, SUBCAT=nil] 
 	VP[NUM=?n, PER=?p, SUBCAT=?rest] -> VP[NUM=?n, PER=?p, SUBCAT=[HEAD=?arg, TAIL=?rest]] ARG[CAT=?arg]
@@ -67,12 +67,12 @@ cfg_str ="""\
 	V[TENSE=pastpart, SUBCAT=[HEAD=np, TAIL=[HEAD=np, TAIL=nil]]] -> 'fed' | 'done'
 	V[TENSE=pastpart, SUBCAT=[HEAD=st, TAIL=nil]] -> 'thought'
 
-	V[TENSE=pastpart, SUBCAT=nil] -> 'barking' | 'laughing' | 'eating'
-	V[TENSE=pastpart, SUBCAT=[HEAD=np, TAIL=[HEAD=pp, TAIL=nil]]] -> 'putting' 
-	V[TENSE=pastpart, SUBCAT=[HEAD=np, TAIL=nil]] -> 'eating' | 'drinking' | 'liking' | 'having'
-	V[TENSE=pastpart, SUBCAT=[HEAD=np, TAIL=nil]] -> 'feeding'
-	V[TENSE=pastpart, SUBCAT=[HEAD=np, TAIL=[HEAD=np, TAIL=nil]]] -> 'feeding' | 'doing'
-	V[TENSE=pastpart, SUBCAT=[HEAD=st, TAIL=nil]] -> 'thinking'
+	V[TENSE=prespart, SUBCAT=nil] -> 'barking' | 'laughing' | 'eating'
+	V[TENSE=prespart, SUBCAT=[HEAD=np, TAIL=[HEAD=pp, TAIL=nil]]] -> 'putting' 
+	V[TENSE=prespart, SUBCAT=[HEAD=np, TAIL=nil]] -> 'eating' | 'drinking' | 'liking' | 'having'
+	V[TENSE=prespart, SUBCAT=[HEAD=np, TAIL=nil]] -> 'feeding'
+	V[TENSE=prespart, SUBCAT=[HEAD=np, TAIL=[HEAD=np, TAIL=nil]]] -> 'feeding' | 'doing'
+	V[TENSE=prespart, SUBCAT=[HEAD=st, TAIL=nil]] -> 'thinking'
  
  	Auxiliary[NUM=sg, PER=3] -> 'does'
  	Auxiliary[NUM=pl] -> 'do' | 'did'
