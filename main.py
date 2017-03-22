@@ -3,8 +3,7 @@ from Grammar import *
 cfg_str ="""\
 
 	# Grammar
-	S -> WhP 
-	S -> SQ
+
 	S -> Statement
 	S -> Question 
 	S -> SBAR 
@@ -26,6 +25,7 @@ cfg_str ="""\
 	VP[NUM=?n, PER=?p, SUBCAT=?rest] -> VP[NUM=?n, PER=?p, SUBCAT=[HEAD=?arg, TAIL=?rest]] ARG[CAT=?arg]
 	VP[NUM=?n, PER=?p, SUBCAT=?args] -> V[NUM=?n, PER=?p, SUBCAT=?args]
 	VP[NUM=?n, PER=?p, SUBCAT=?args] -> RB VP[NUM=?n, PER=?p, SUBCAT=?args]
+	VP[NUM=?n, PER=?p, SUBCAT=?args] -> MD VP[NUM=?n, PER=?p, SUBCAT=?args]
 
 	AP -> RB JJ | JJ
 	Nominal[NUM=?n] -> Nominal[NUM=?n] Noun[NUM=?n] | Noun[NUM=?n] 
