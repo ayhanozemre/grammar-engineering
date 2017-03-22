@@ -3,12 +3,12 @@ from Grammar import *
 cfg_str ="""\
 
 	# Grammar
-	S -> Statement[NUM=?n]
-	S -> Question[NUM=?n] 
-	S -> SBAR 
-	SBAR -> WhP Statement 
 
-	Statement[SUBCAT=?rest] -> Statement[SUBCAT=[HEAD=st, TAIL=?rest]] ARG[CAT=st]
+	S -> Statement
+	S -> Question 
+	S -> SBAR 
+	SBAR -> WhP Statement Statement  
+
 	Statement[NUM=?n] -> NP[NUM=?n, PER=?p] VP[NUM=?n, PER=?p, SUBCAT=nil] | NP[NUM=?n, PER=?p] RB VP[NUM=?n, PER=?p, SUBCAT=nil] 
 
 	Question[NUM=?n] -> WhP Auxiliary[NUM=?n, PER=?p] NP[NUM=?n, PER=?p] VP[NUM=pl, SUBCAT=?s] | Auxiliary[NUM=?n, PER=?p] NP[NUM=?n, PER=?p] VP[NUM=pl, SUBCAT=?s]
