@@ -82,11 +82,6 @@ when does Wallace eat cheese
 """
 
 to_test = """\
-does you eat
-do you eat 
-do he eat 
-do he eats 
-does he eat
 """
 
 invalid = """\
