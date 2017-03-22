@@ -16,7 +16,6 @@ cfg_str ="""\
 	WhNP -> WP | WDT Nominal 
 	WhADVP -> WRB 
 	SQ -> Auxiliary[NUM=?n, PER=?p] NP[NUM=?n, PER=?p] VP[NUM=pl, SUBCAT=nil]
-	
 
 	NP[NUM=pl] -> NP CC NP
 	NP[NUM=?n, PER=?p] -> DT[NUM=?n] Nominal[NUM=?n] | Nominal[NUM=?n] | ProperNoun[NUM=?n, PER=?p] | Pronoun[NUM=?n, PER=?p] | AP NP[NUM=?n] | NP[NUM=?n] PP
@@ -53,8 +52,26 @@ cfg_str ="""\
 	V[NUM=pl, SUBCAT=[HEAD=np, TAIL=[HEAD=np, TAIL=nil]]] -> 'feed' | 'do'
 	V[NUM=pl, SUBCAT=[HEAD=st, TAIL=nil]] -> 'think'
 
- 	V[TENSE=past] -> 'barked' | 'laughed' | 'ate' | 'fed' | 'thought' | 'drank' | 'did'
- 	V[TENSE=prespart] -> 'barking' | 'laughing' | 'eating' | 'feeding' | 'thinking' | 'drinking' | 'doing'
+	V[TENSE=past, SUBCAT=nil] -> 'barked' | 'laughed' | 'ate'
+	V[TENSE=past, SUBCAT=[HEAD=np, TAIL=[HEAD=pp, TAIL=nil]]] -> 'put' 
+	V[TENSE=past, SUBCAT=[HEAD=np, TAIL=nil]] -> 'ate' | 'drank' | 'liked' | 'had'
+	V[TENSE=past, SUBCAT=[HEAD=np, TAIL=nil]] -> 'fed'
+	V[TENSE=past, SUBCAT=[HEAD=np, TAIL=[HEAD=np, TAIL=nil]]] -> 'fed' | 'did'
+	V[TENSE=past, SUBCAT=[HEAD=st, TAIL=nil]] -> 'thought'
+
+	V[TENSE=pastpart, SUBCAT=nil] -> 'barked' | 'laughed' | 'eaten'
+	V[TENSE=pastpart, SUBCAT=[HEAD=np, TAIL=[HEAD=pp, TAIL=nil]]] -> 'put' 
+	V[TENSE=pastpart, SUBCAT=[HEAD=np, TAIL=nil]] -> 'eaten' | 'drunk' | 'liked' | 'had'
+	V[TENSE=pastpart, SUBCAT=[HEAD=np, TAIL=nil]] -> 'fed'
+	V[TENSE=pastpart, SUBCAT=[HEAD=np, TAIL=[HEAD=np, TAIL=nil]]] -> 'fed' | 'done'
+	V[TENSE=pastpart, SUBCAT=[HEAD=st, TAIL=nil]] -> 'thought'
+
+	V[TENSE=pastpart, SUBCAT=nil] -> 'barking' | 'laughing' | 'eating'
+	V[TENSE=pastpart, SUBCAT=[HEAD=np, TAIL=[HEAD=pp, TAIL=nil]]] -> 'putting' 
+	V[TENSE=pastpart, SUBCAT=[HEAD=np, TAIL=nil]] -> 'eating' | 'drinking' | 'liking' | 'having'
+	V[TENSE=pastpart, SUBCAT=[HEAD=np, TAIL=nil]] -> 'feeding'
+	V[TENSE=pastpart, SUBCAT=[HEAD=np, TAIL=[HEAD=np, TAIL=nil]]] -> 'feeding' | 'doing'
+	V[TENSE=pastpart, SUBCAT=[HEAD=st, TAIL=nil]] -> 'thinking'
  
  	Auxiliary[NUM=sg, PER=3] -> 'does'
  	Auxiliary[NUM=pl] -> 'do' | 'did'
