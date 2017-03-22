@@ -27,8 +27,8 @@ cfg_str ="""\
 	VP[NUM=?n, PER=?p, TENSE=past, SUBCAT=?args] -> V[NUM=?n, PER=?p, TENSE=past, SUBCAT=?args] 
 	VP[NUM=?n, PER=?p, TENSE=prespart, SUBCAT=?args] -> BE[NUM=?n, PER=?p] V[TENSE=prespart, SUBCAT=?args] 
 
-	VP[NUM=?n, PER=?p, TENSE=?t, SUBCAT=?args] -> RB VP[NUM=?n, PER=?p, TENSE=?t, SUBCAT=?args]
-	VP[NUM=?n, PER=?p, TENSE=?t, SUBCAT=?args] -> MD VP[NUM=pl, TENSE=presperf, PER=?p, SUBCAT=nil] | MD VP[NUM=pl, TENSE=pres, PER=?p, SUBCAT=nil]
+	VP[NUM=?n, PER=?p, TENSE=?t, SUBCAT=nil] -> RB VP[NUM=?n, PER=?p, TENSE=?t, SUBCAT=?args]
+	VP[NUM=?n, PER=?p, TENSE=pres] -> MD VP[NUM=pl, TENSE=presperf, PER=?p, SUBCAT=nil] | MD VP[NUM=pl, TENSE=pres, PER=?p, SUBCAT=nil]
 	VP[NUM=?n, TENSE=presperf, SUBCAT=?args] -> HV[NUM=?n, PER=?p, TENSE=pres] V[TENSE=pastpart, SUBCAT=?args]
 
 	AP -> RB JJ | JJ
@@ -130,7 +130,7 @@ what cheese does Wallace think Gromit eats
 """
 
 to_test = """\
-Wallace should have fed Gromit cheese
+Wallace seldom feeds Gromit cheese
 """
 
 invalid = """\
