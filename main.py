@@ -16,7 +16,6 @@ cfg_str ="""\
 	WhNP -> WP | WDT Nominal 
 	WhADVP -> WRB 
 	SQ -> Auxiliary[NUM=?n, PER=?p] NP[NUM=?n, PER=?p] VP[NUM=pl, SUBCAT=nil]
-	#Question[NUM=?n] -> WhP Auxiliary[NUM=?n, PER=?p] NP[NUM=?n, PER=?p] VP[NUM=pl, SUBCAT=?s] | Auxiliary[NUM=?n, PER=?p] NP[NUM=?n, PER=?p] VP[NUM=pl, SUBCAT=?s]
 	
 
 	NP[NUM=pl] -> NP[NUM=?n] CC NP[NUM=?n]
