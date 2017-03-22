@@ -23,8 +23,9 @@ class Grammar:
 			number = len(list(parses))
 			if number > 0:
 				counter += 1
+			print "found {} parses for sentence: \n   {}".format(number, sent)
 			if toPrint or (number > 1 and toPrintRepetitions):
-				print "found {} parses for sentence: \n   {}".format(number, sent)
+				
 				for tree in self.parser.parse(sent.split()):
 					print tree
 					print "--------------"
