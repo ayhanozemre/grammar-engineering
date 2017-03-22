@@ -9,7 +9,7 @@ cfg_str ="""\
 	S -> SBAR 
 	SBAR -> WhP Statement Statement  
 
-	Statement[NUM=?n] -> NP[NUM=?n, PER=?p] VP[NUM=?n, PER=?p, SUBCAT=nil] | NP[NUM=?n, PER=?p] RB VP[NUM=?n, PER=?p, SUBCAT=nil] 
+	Statement[NUM=?n] -> NP[NUM=?n, PER=?p] VP[NUM=?n, PER=?p, SUBCAT=nil] 
 
 	Question[NUM=?n] -> WhP Auxiliary[NUM=?n, PER=?p] NP[NUM=?n, PER=?p] VP[NUM=pl, SUBCAT=?s] | Auxiliary[NUM=?n, PER=?p] NP[NUM=?n, PER=?p] VP[NUM=pl, SUBCAT=?s]
 	WhP -> WRB
@@ -20,6 +20,7 @@ cfg_str ="""\
 	VP[NUM=?n, PER=?p, SUBCAT=?rest] -> VP[NUM=?n, PER=?p, SUBCAT=nil] CC VP[NUM=?n, PER=?p, SUBCAT=nil] 
 	VP[NUM=?n, PER=?p, SUBCAT=?rest] -> VP[NUM=?n, PER=?p, SUBCAT=[HEAD=?arg, TAIL=?rest]] ARG[CAT=?arg]
 	VP[NUM=?n, PER=?p, SUBCAT=?args] -> V[NUM=?n, PER=?p, SUBCAT=?args]
+	VP[NUM=?n, PER=?p, SUBCAT=?args] -> RB VP[NUM=?n, PER=?p, SUBCAT=?args]
 
 	AP -> RB JJ | JJ
 	Nominal[NUM=?n] -> Nominal[NUM=?n] Noun[NUM=?n] | Noun[NUM=?n] 
@@ -36,7 +37,8 @@ cfg_str ="""\
 	V[NUM=sg, PER=3, SUBCAT=nil] -> 'barks' | 'laughs'
 	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=[HEAD=pp, TAIL=nil]]] -> 'puts' 
 	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=nil]] -> 'eats' | 'drinks'
-	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=?t]] -> 'feeds'
+	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=nil]] -> 'feeds'
+	V[NUM=sg, PER=3, SUBCAT=[HEAD=np, TAIL=[HEAD=np, TAIL=nil]]] -> 'feeds'
 	V[NUM=sg, PER=3, SUBCAT=[HEAD=st, TAIL=nil]] -> 'thinks'
 
  	V[TENSE=past] -> 'barked' | 'laughed' | 'ate' | 'fed' | 'thought' | 'drank' | 'did'
@@ -89,8 +91,8 @@ def main():
 	##############################################
 	"""
 	g = Grammar(cfg_str)
-	g.parse_and_print(text)
-	g.parse_and_print(to_test, True)
+	g.parse_and_print(text, False, True)
+	#g.parse_and_print(to_test, True)
 	g.parse_and_print(invalid)
 
 if __name__ == '__main__':
