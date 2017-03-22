@@ -23,10 +23,10 @@ cfg_str ="""\
 
 	VP[NUM=?n, PER=?p, SUBCAT=?rest] -> VP[NUM=?n, PER=?p, SUBCAT=nil] CC VP[NUM=?n, PER=?p, SUBCAT=nil] 
 	VP[NUM=?n, PER=?p, SUBCAT=?rest] -> VP[NUM=?n, PER=?p, SUBCAT=[HEAD=?arg, TAIL=?rest]] ARG[CAT=?arg]
-	VP[NUM=?n, PER=?p, SUBCAT=?args] -> V[NUM=?n, PER=?p, SUBCAT=?args]
+	VP[NUM=?n, PER=?p, SUBCAT=?args] -> V[NUM=?n, PER=?p, TENSE=pres, SUBCAT=?args] | V[NUM=?n, PER=?p, TENSE=past, SUBCAT=?args] 
 	VP[NUM=?n, PER=?p, SUBCAT=?args] -> RB VP[NUM=?n, PER=?p, SUBCAT=?args]
 	VP[NUM=?n, PER=?p, SUBCAT=?args] -> MD VP[NUM=pl, TENSE=presperf, PER=?p, SUBCAT=?args] | MD VP[NUM=pl, TENSE=pres, PER=?p, SUBCAT=?args]
-	VP[NUM=?n, TENSE=presperf, SUBCAT=?args] -> HV[NUM=?n, PER=?p, TENSE=pres] V[TENSE=past, SUBCAT=?args]
+	VP[NUM=?n, TENSE=presperf, SUBCAT=?args] -> HV[NUM=?n, PER=?p, TENSE=pres] V[TENSE=pastpart, SUBCAT=?args]
 
 	AP -> RB JJ | JJ
 	Nominal[NUM=?n] -> Nominal[NUM=?n] Noun[NUM=?n] | Noun[NUM=?n] 
@@ -54,7 +54,6 @@ cfg_str ="""\
 	V[NUM=pl, TENSE=pres, SUBCAT=[HEAD=np, TAIL=[HEAD=np, TAIL=nil]]] -> 'feed' | 'do'
 	V[NUM=pl, TENSE=pres, SUBCAT=[HEAD=st, TAIL=nil]] -> 'think'
 
-
 	V[TENSE=past, SUBCAT=nil] -> 'barked' | 'laughed' | 'ate'
 	V[TENSE=past, SUBCAT=[HEAD=np, TAIL=[HEAD=pp, TAIL=nil]]] -> 'put' 
 	V[TENSE=past, SUBCAT=[HEAD=np, TAIL=nil]] -> 'ate' | 'drank' | 'liked' | 'had'
@@ -63,11 +62,11 @@ cfg_str ="""\
 	V[TENSE=past, SUBCAT=[HEAD=st, TAIL=nil]] -> 'thought'
 
 	V[TENSE=pastpart, SUBCAT=nil] -> 'barked' | 'laughed' | 'eaten'
-	V[TENSE=pastpart, SUBCAT=[HEAD=np, TAIL=[HEAD=pp, TAIL=nil]]] -> 'put' 
-	V[TENSE=pastpart, SUBCAT=[HEAD=np, TAIL=nil]] -> 'eaten' | 'drunk' | 'liked' | 'had'
-	V[TENSE=pastpart, SUBCAT=[HEAD=np, TAIL=nil]] -> 'fed'
-	V[TENSE=pastpart, SUBCAT=[HEAD=np, TAIL=[HEAD=np, TAIL=nil]]] -> 'fed' | 'done'
-	V[TENSE=pastpart, SUBCAT=[HEAD=st, TAIL=nil]] -> 'thought'
+	V[TENSE=pastpart, SUBCAT=nil] -> 'put' 
+	V[TENSE=pastpart, SUBCAT=nil] -> 'eaten' | 'drunk' | 'liked' | 'had'
+	V[TENSE=pastpart, SUBCAT=nil] -> 'fed'
+	V[TENSE=pastpart, SUBCAT=nil] -> 'fed' | 'done'
+	V[TENSE=pastpart, SUBCAT=nil] -> 'thought'
 
 	V[TENSE=prespart, SUBCAT=nil] -> 'barking' | 'laughing' | 'eating'
 	V[TENSE=prespart, SUBCAT=[HEAD=np, TAIL=[HEAD=pp, TAIL=nil]]] -> 'putting' 
@@ -75,7 +74,9 @@ cfg_str ="""\
 	V[TENSE=prespart, SUBCAT=[HEAD=np, TAIL=nil]] -> 'feeding'
 	V[TENSE=prespart, SUBCAT=[HEAD=np, TAIL=[HEAD=np, TAIL=nil]]] -> 'feeding' | 'doing'
 	V[TENSE=prespart, SUBCAT=[HEAD=st, TAIL=nil]] -> 'thinking'
- 
+
+	HV -> 'has' | 'have'
+
  	Auxiliary[NUM=sg, PER=3] -> 'does'
  	Auxiliary[NUM=pl] -> 'do' | 'did'
  	ProperNoun[NUM=sg, PER=3] -> 'Gromit' | 'Wallace'
@@ -115,14 +116,17 @@ what cheese does Wallace think Gromit eats
 """
 
 to_test = """\
-Wallace should have fed Gromit cheese
+Gromit barked
 """
 
 invalid = """\
 Gromit bark
+Gromit eaten
 when do Gromit eat cheese
 Gromit barks the kitchen
 Wallace should has feed Gromit cheese
+Wallace should has fed Gromit cheese
+Wallace should have feed Gromit cheese
 """
 
 def main():
