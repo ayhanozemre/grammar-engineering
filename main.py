@@ -1,4 +1,5 @@
 from Grammar import *
+import sys, getopt
 
 cfg_str ="""\
 
@@ -153,17 +154,43 @@ I like
 when I laugh
 """
 
-def main():
+def process_args(argv, argsdict):
+	""" Processes args given in command line. """
+	print argsdict
+	try:
+		opts, args = getopt.getopt(argv, "p:r:i:d",["toPrintValid=", "toPrintRepetitionsValid=", "toPrintInvalid=", "toPrintRepetitionsInvalid="])
+	except getopt.GetoptError:
+		print 'Could not get arguments'
+		sys.exit(2)
+	for opt, arg in opts:
+		if opt in ('-p', '--toPrintValid'):
+			argsdict['toPrintValid'] = True
+		elif opt in ('-r', '--toPrintRepetitionsValid'):
+			argsdict['toPrintRepetitionsValid'] = True
+		elif opt in ('-i', '--toPrintInvalid'):
+			argsdict['toPrintInvalid'] = True
+		elif opt in ('-d', '--toPrintRepetitionsInvalid'):
+			argsdict['toPrintRepetitionsInvalid'] = True 
+		else:
+			continue
+	return dict(argsdict)
+
+
+def main(argv):
 	print """\
 	##############################################
 	#                 Begin                      #
 	##############################################
 	"""
+	args = {'toPrintValid': False, 'toPrintRepetitionsValid': False,
+	'toPrintInvalid': False, 'toPrintRepetitionsInvalid': False}
+	args = process_args(argv, args)
+	print args
 	g = Grammar(cfg_str)
 	print "======= Valid sentences: ======"
-	g.parse_and_print(valid)
+	g.parse_and_print(valid, args['toPrintValid'], args['toPrintRepetitionsValid'])
 	print "======= Invalid sentences: ======"
-	g.parse_and_print(invalid)
+	g.parse_and_print(invalid, args['toPrintInvalid'], args['toPrintRepetitionsInvalid'])
 
 if __name__ == '__main__':
-	main()
+	main(sys.argv[1:])
